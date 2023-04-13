@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.markdown {
+  h1 {
+    font-size: 2.25rem /* 36px */;
+    line-height: 2.5rem /* 40px */;
+    margin-bottom: 1rem /* 8px */;
+  }
+  h2 {
+    font-size: 1.875rem /* 30px */;
+    line-height: 2.25rem /* 36px */;
+    margin-bottom: 1rem /* 8px */;
+  }
+  h3 {
+    font-size: 1.5rem /* 24px */;
+    line-height: 2rem /* 32px */;
+    margin-bottom: 1rem /* 8px */;
+  }
+  h4 {
+    font-size: 1.25rem /* 20px */;
+    line-height: 1.75rem /* 28px */;
+    margin-bottom: 1rem /* 8px */;
+  }
+  h5 {
+    font-size: 1.125rem /* 18px */;
+    line-height: 1.75rem /* 28px */;
+    margin-bottom: 1rem /* 8px */;
+  }
+  h6 {
+    font-size: 1rem /* 16px */;
+    line-height: 1.5rem /* 24px */;
+    margin-bottom: 0.5rem /* 8px */;
+  }
+  p {
+    font-size: 1rem /* 16px */;
+    line-height: 1.5rem /* 24px */;
+    margin-bottom: 1rem /* 16px */;
+  }
+  ul {
+    list-style-type: disc;
+    margin-bottom: 0.5rem /* 8px */;
+    margin-left: 1.5rem /* 24px */;
+  }
+  ol {
+    list-style-type: decimal;
+    margin-bottom: 0.5rem /* 8px */;
+    margin-left: 1.5rem /* 24px */;
+  }
+  li {
+    margin-bottom: 0.5rem /* 8px */;
+  }
+  a {
+    color: rgb(59 130 246);
+  }
+  blockquote {
+    border-left-width: 4px;
+    border-color: rgb(229 231 235);
+    padding-left: 1rem; /* 16px */
+    margin-bottom: 1rem /* 16px */;
+  }
+
+  hr {
+    border-top-width: 1px;
+    border-color: rgb(229 231 235);
+    margin: 2rem 0 2rem 0;
+  }
+
+  pre {
+    margin-bottom: 1rem /* 16px */;
+  }
+}
