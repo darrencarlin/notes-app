@@ -14,7 +14,7 @@ const Letters: React.FC = () => {
 
   if (width < 768) {
     return (
-      <div className="flex items-center gap-4 overflow-x-scroll p-4 bg-gray-900">
+      <div className="flex items-center gap-4 overflow-x-scroll overflow-y-hidden px-4  bg-gray-900">
         {letters.map((l) => {
           const hasNoNotes = !notes.some((n) => n.letter === l);
           const isActive = checkStringsMatch(l, currentLetter);

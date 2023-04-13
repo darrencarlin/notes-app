@@ -36,12 +36,14 @@ const Notes: React.FC = () => {
 
     return (
       <div className="bg-gray-900">
-        <button
-          className="text-white block absolute top-2 right-4 z-10"
-          onClick={() => dispatch(toggleMenu())}
-        >
-          Menu
-        </button>
+        {notes.length > 0 && (
+          <button
+            className="text-white block absolute top-2 right-4 z-10"
+            onClick={() => dispatch(toggleMenu())}
+          >
+            Menu
+          </button>
+        )}
 
         <div className={classnames}>
           <div>
