@@ -92,7 +92,6 @@ const Note: React.FC = () => {
   return (
     <>
       <div className="bg-gray-800 py-4 px-8">
-        test
         {editMode !== "edit" && (
           <>
             <h1 className="text-2xl font-bold mb-4">{currentNote.title}</h1>
