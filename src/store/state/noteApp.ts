@@ -11,6 +11,7 @@ export const noteApp = createSlice({
     currentLetter: "",
     currentNote: {} as Note,
     modalOpen: false,
+    menuOpen: false,
   } as NoteApp,
   reducers: {
     setEditMode: (state, action) => {
@@ -26,6 +27,7 @@ export const noteApp = createSlice({
     setNote: (state, action) => {
       state.currentNote = action.payload;
       state.editMode = "view";
+      if (state.menuOpen) state.menuOpen = false;
     },
     editNote: (state, action) => {
       const { id } = action.payload;
@@ -62,6 +64,9 @@ export const noteApp = createSlice({
     toggleModal: (state) => {
       state.modalOpen = !state.modalOpen;
     },
+    toggleMenu: (state) => {
+      state.menuOpen = !state.menuOpen;
+    },
   },
 });
 
@@ -73,6 +78,7 @@ export const {
   addNote,
   deleteNote,
   toggleModal,
+  toggleMenu,
 } = noteApp.actions;
 
 export const noteAppReducer = noteApp.reducer;

@@ -14,6 +14,7 @@ export interface NoteApp {
   currentLetter: string;
   currentNote: Note;
   modalOpen: boolean;
+  menuOpen: boolean;
   setLetter: (letter: string) => void;
   setNote: (note: Note) => void;
   editNote: (note: Note) => void;

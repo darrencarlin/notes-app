@@ -56,7 +56,7 @@ const Note: React.FC = () => {
 
   if (editMode === "new") {
     return (
-      <div className="bg-gray-800 py-4 px-8">
+      <div className="bg-gray-800 py-2 px-4 sm:py-4 sm:px-8">
         <h1 className="text-2xl font-bold mb-4">New Note</h1>
         <HorizontalRule />
 
