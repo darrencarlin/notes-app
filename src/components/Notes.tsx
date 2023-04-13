@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
+import { setNote } from "@/store/state/noteApp";
 import { Note } from "@/types";
 import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
 import classNames from "classnames";
-import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setEditMode, setNote } from "@/store/state/noteApp";
-import Button from "./Button";
+import { useEffect, useState } from "react";
 
 const Notes: React.FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
@@ -21,16 +20,6 @@ const Notes: React.FC = () => {
     );
     setFilteredNotes(filteredNotes);
   }, [currentLetter, notes]);
-
-  if (!filteredNotes.length)
-    return (
-      <div className="bg-gray-900 p-4 flex flex-col justify-between items-start">
-        <div>
-          <h3 className="font-bold">{currentLetter}</h3>
-          <p className="text-gray-500">No notes found</p>
-        </div>
-      </div>
-    );
 
   return (
     <div className="bg-gray-900 p-4 flex flex-col justify-between items-start">

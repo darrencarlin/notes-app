@@ -1,16 +1,16 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
+import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
+import { callToast } from "@/util/toast";
 import { useState, type ChangeEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "./Button";
-import Markdown from "./Markdown";
 import HorizontalRule from "./HorizontalRule";
-import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
+import Markdown from "./Markdown";
 import Modal from "./Modal";
-import { toast } from "react-toastify";
+import NoNotesFound from "./NoNotesFound";
 import Input from "./inputs/Input";
 import TextArea from "./inputs/TextArea";
-import { callToast } from "@/util/toast";
 
 const Note: React.FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
@@ -52,11 +52,7 @@ const Note: React.FC = () => {
   };
 
   if (checkIfObjectIsEmpty(currentNote) && editMode !== "new")
-    return (
-      <div className="bg-gray-800 p-4 px-8">
-        <h1 className="text-2xl font-bold mb-4">No Note Selected</h1>
-      </div>
-    );
+    return <NoNotesFound />;
 
   if (editMode === "new") {
     return (
