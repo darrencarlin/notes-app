@@ -1,20 +1,6 @@
-import { Note } from "@/types";
+import { Note, NoteApp } from "@/types";
 import { ALPHABET } from "@/util/constants";
 import { createSlice, current } from "@reduxjs/toolkit";
-
-interface NoteApp {
-  editMode: "edit" | "view" | "new";
-  letters: string[];
-  notes: Note[];
-  currentLetter: string;
-  currentNote: Note;
-  modalOpen: boolean;
-  setLetter: (letter: string) => void;
-  setNote: (note: Note) => void;
-  editNote: (note: Note) => void;
-  setEditMode: (mode: "edit" | "view" | "new") => void;
-  deleteNote: (note: Note) => void;
-}
 
 export const noteApp = createSlice({
   name: "noteApp",
@@ -25,14 +11,13 @@ export const noteApp = createSlice({
     currentLetter: "",
     currentNote: {} as Note,
     modalOpen: false,
-  },
+  } as NoteApp,
   reducers: {
     setEditMode: (state, action) => {
       state.editMode = action.payload;
     },
     setLetter: (state, action) => {
       state.currentLetter = action.payload;
-
       state.currentNote =
         current(state.notes).find((note) => note.letter === action.payload) ??
         ({} as Note);
