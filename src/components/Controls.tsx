@@ -1,22 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { deleteNote, setEditMode, toggleModal } from "@/store/state/noteApp";
+import { setEditMode, toggleModal } from "@/store/state/noteApp";
 import Button from "./Button";
 
 const Controls: React.FC = () => {
-  const { editMode, currentNote, notes } = useAppSelector((state) => state.noteApp);
+  const { editMode, notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
-  const confirmDelete = () => {
-    dispatch(toggleModal());
-    // const confirm = window.confirm("Are you sure you want to delete this note?");
-    // if (confirm) {
-    //   dispatch(deleteNote(currentNote.id));
-    // }
-  };
-
   const noNotes = !notes.length;
-
-  console.log({ noNotes });
 
   return (
     <div className="bg-gray-700 py-4 px-8 flex  justify-between gap-4 items-center">
@@ -48,7 +38,7 @@ const Controls: React.FC = () => {
               <Button
                 backgroundColor="bg-red-600"
                 text="Delete Note"
-                onClick={() => confirmDelete()}
+                onClick={() => dispatch(toggleModal())}
               />
             ))}
         </div>
