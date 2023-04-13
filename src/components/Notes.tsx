@@ -27,9 +27,8 @@ const Notes: React.FC = () => {
       <div className="bg-gray-900 p-4 flex flex-col justify-between items-start">
         <div>
           <h3 className="font-bold">{currentLetter}</h3>
-          <div>No notes!</div>
+          <p className="text-gray-500">No notes found</p>
         </div>
-        <Button text="Add Note" onClick={() => dispatch(setEditMode("new"))} />
       </div>
     );
 

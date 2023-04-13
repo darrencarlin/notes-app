@@ -8,6 +8,7 @@ interface NoteApp {
   notes: Note[];
   currentLetter: string;
   currentNote: Note;
+  modalOpen: boolean;
   setLetter: (letter: string) => void;
   setNote: (note: Note) => void;
   editNote: (note: Note) => void;
@@ -23,6 +24,7 @@ export const noteApp = createSlice({
     notes: [] as Note[],
     currentLetter: "",
     currentNote: {} as Note,
+    modalOpen: false,
   },
   reducers: {
     setEditMode: (state, action) => {
@@ -72,10 +74,20 @@ export const noteApp = createSlice({
         state.notes.find((note) => note.letter === state.currentLetter) ??
         ({} as Note);
     },
+    toggleModal: (state) => {
+      state.modalOpen = !state.modalOpen;
+    },
   },
 });
 
-export const { setEditMode, setLetter, setNote, editNote, addNote, deleteNote } =
-  noteApp.actions;
+export const {
+  setEditMode,
+  setLetter,
+  setNote,
+  editNote,
+  addNote,
+  deleteNote,
+  toggleModal,
+} = noteApp.actions;
 
 export const noteAppReducer = noteApp.reducer;

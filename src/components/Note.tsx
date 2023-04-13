@@ -1,10 +1,16 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { addNote, editNote } from "@/store/state/noteApp";
-import { useState, type ChangeEvent, useRef, useEffect } from "react";
+import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
+import { useState, type ChangeEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "./Button";
 import Markdown from "./Markdown";
 import HorizontalRule from "./HorizontalRule";
+import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
+import Modal from "./Modal";
+import { toast } from "react-toastify";
+import Input from "./inputs/Input";
+import TextArea from "./inputs/TextArea";
+import { callToast } from "@/util/toast";
 
 const Note: React.FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
@@ -22,6 +28,7 @@ const Note: React.FC = () => {
     dispatch(addNote(note));
     setNewNoteTitle("");
     setNewNoteBody("");
+    callToast("Note created ✏️");
   };
 
   const updateNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -44,7 +51,12 @@ const Note: React.FC = () => {
     dispatch(editNote(updatedNote));
   };
 
-  if (!currentNote) return <div className="bg-gray-800 p-4 px-8">No notes!</div>;
+  if (checkIfObjectIsEmpty(currentNote))
+    return (
+      <div className="bg-gray-800 p-4 px-8">
+        <h1 className="text-2xl font-bold mb-4">No Note Selected</h1>
+      </div>
+    );
 
   if (editMode === "new") {
     return (
@@ -53,17 +65,17 @@ const Note: React.FC = () => {
         <HorizontalRule />
 
         <form className="flex flex-col items-end">
-          <input
-            className="w-full bg-gray-700  p-4 mb-4"
+          <Input
             value={newNoteTitle}
             placeholder="Title"
             type="text"
             onChange={(e) => setNewNoteTitle(e.target.value)}
           />
-          <textarea
-            className="w-full h-96 bg-gray-700 p-4 mb-4"
+
+          <TextArea
             placeholder="Body"
             value={newNoteBody}
+            height
             onChange={(e) => setNewNoteBody(e.target.value)}
           />
           <Button
@@ -78,30 +90,39 @@ const Note: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-800 py-4 px-8">
-      {editMode !== "edit" && (
-        <>
-          <h1 className="text-2xl font-bold mb-4">{currentNote.title}</h1>
-          <HorizontalRule />
-        </>
-      )}
-      {editMode === "edit" ? (
-        <>
-          <input
-            defaultValue={currentNote.title}
-            className="w-full bg-gray-800 text-white border-2 border-gray-700 rounded-md p-4 mb-4"
-            onChange={(e) => updateTitle(e)}
-          />
-          <textarea
-            className="w-full h-96 bg-gray-800 text-white border-2 border-gray-700 rounded-md p-4"
-            defaultValue={currentNote.body}
-            onChange={(e) => updateNote(e)}
-          />
-        </>
-      ) : (
-        <Markdown markdown={currentNote.body} />
-      )}
-    </div>
+    <>
+      <div className="bg-gray-800 py-4 px-8">
+        {editMode !== "edit" && (
+          <>
+            <h1 className="text-2xl font-bold mb-4">{currentNote.title}</h1>
+            <HorizontalRule />
+          </>
+        )}
+        {editMode === "edit" ? (
+          <form className="grid grid-rows-[56px_1fr] h-full">
+            <Input
+              defaultValue={currentNote.title}
+              onChange={(e) => updateTitle(e)}
+            />
+            <TextArea
+              defaultValue={currentNote.body}
+              onChange={(e) => updateNote(e)}
+            />
+          </form>
+        ) : (
+          <Markdown markdown={currentNote.body} />
+        )}
+      </div>
+      <Modal
+        title="Delete Note"
+        body="Are you sure you want to delete this note? This action cannot be undone."
+        action={() => {
+          dispatch(deleteNote(currentNote.id));
+          callToast("Note deleted 🗑️");
+        }}
+        actionText="Delete"
+      />
+    </>
   );
 };
 

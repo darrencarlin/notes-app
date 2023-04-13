@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { type ButtonHTMLAttributes, type ReactNode } from "react";
 
 const colorMap = {
+  none: "text-gray-600",
   "bg-gray-600": "text-white",
   "bg-red-600": "text-white",
   "bg-green-600": "text-white",
@@ -9,6 +10,7 @@ const colorMap = {
 };
 
 const hoverColorMap = {
+  none: "hover:border-gray-400",
   "bg-gray-600": "hover:bg-gray-700",
   "bg-red-600": "hover:bg-red-700",
   "bg-green-600": "hover:bg-green-700",
@@ -19,14 +21,19 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   icon?: ReactNode;
   fullWidth?: boolean;
-  backgroundColor?: "bg-gray-600" | "bg-red-600" | "bg-green-600" | "bg-blue-600";
+  backgroundColor?:
+    | "none"
+    | "bg-gray-600"
+    | "bg-red-600"
+    | "bg-green-600"
+    | "bg-blue-600";
 }
 
 const Button: React.FC<Props> = ({
   text,
   icon,
   fullWidth,
-  backgroundColor = "bg-gray-600",
+  backgroundColor = "none",
   ...props
 }) => {
   const hasIcon = icon ? true : false;
@@ -36,6 +43,7 @@ const Button: React.FC<Props> = ({
 
   const classnames = classNames(
     {
+      "border-2 border-gray-300": backgroundColor === "none",
       "flex items-center gap-4": hasIcon,
       "w-full": fullWidth,
     },
