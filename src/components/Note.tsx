@@ -11,11 +11,13 @@ import Modal from "./Modal";
 import NoNotesFound from "./NoNotesFound";
 import Input from "./inputs/Input";
 import TextArea from "./inputs/TextArea";
+import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
+import axios from "axios";
 
 const Note: React.FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
   const [newNoteBody, setNewNoteBody] = useState<string>("");
-  const { currentNote, editMode } = useAppSelector((state) => state.noteApp);
+  const { currentNote, editMode, userId } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
   const saveNote = () => {
@@ -28,7 +30,7 @@ const Note: React.FC = () => {
     dispatch(addNote(note));
     setNewNoteTitle("");
     setNewNoteBody("");
-    callToast("Note created ✏️");
+    callToast("Note created ✏️", "success");
   };
 
   const updateNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -49,6 +51,27 @@ const Note: React.FC = () => {
       letter: currentNote.letter,
     };
     dispatch(editNote(updatedNote));
+  };
+
+  const handleDeleteNote = async (id: string) => {
+    const response = await axios.post(
+      BASE_URL + "/api/delete",
+      {
+        userId,
+        id,
+      },
+      DEFAULT_HEADERS
+    );
+
+    const status = response.status;
+    const { message } = response.data;
+
+    if (status === 200) {
+      dispatch(deleteNote(id));
+      callToast(message, "success");
+    } else {
+      callToast(message, "warning");
+    }
   };
 
   if (checkIfObjectIsEmpty(currentNote) && editMode !== "new")
@@ -113,8 +136,7 @@ const Note: React.FC = () => {
         title="Delete Note"
         body="Are you sure you want to delete this note? This action cannot be undone."
         action={() => {
-          dispatch(deleteNote(currentNote.id));
-          callToast("Note deleted 🗑️");
+          handleDeleteNote(currentNote.id);
         }}
         actionText="Delete"
       />

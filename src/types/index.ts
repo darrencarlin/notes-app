@@ -8,6 +8,8 @@ export interface Note {
 export type Mode = "edit" | "view" | "new";
 
 export interface NoteApp {
+  userId: string;
+  passcode: string;
   editMode: Mode;
   letters: string[];
   notes: Note[];
@@ -17,6 +19,7 @@ export interface NoteApp {
   menuOpen: boolean;
   setLetter: (letter: string) => void;
   setNote: (note: Note) => void;
+  setNotes: (notes: Note[]) => void;
   editNote: (note: Note) => void;
   setEditMode: (mode: Mode) => void;
   deleteNote: (note: Note) => void;

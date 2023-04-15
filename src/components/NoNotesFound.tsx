@@ -1,11 +1,26 @@
+import { useAppSelector } from "@/store/hooks/redux";
+import { BASE_URL } from "@/util/constants";
+
 const NoNotesFound = () => {
+  const { userId, passcode } = useAppSelector((state) => state.noteApp);
+
   return (
     <div className="bg-gray-800 p-4 px-8">
       <h1 className="text-2xl font-bold my-4">
         No notes found, Click &apos;New Note&apos; to get started
       </h1>
       <p className="mb-4">
-        Notes are saved locally in your browser. They support{" "}
+        Bookmark this{" "}
+        <a
+          className="underline text-blue-400"
+          href={`${BASE_URL}/?userId=${userId}&passcode=${passcode}`}
+        >
+          LINK
+        </a>{" "}
+        to access your notes from anywhere. It is unique to you.
+      </p>
+      <p className="mb-4">
+        Notes support{" "}
         <a
           target="_blank"
           rel="noreferrer"

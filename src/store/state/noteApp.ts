@@ -5,6 +5,8 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const noteApp = createSlice({
   name: "noteApp",
   initialState: {
+    userId: "",
+    passcode: "",
     editMode: "view",
     letters: ALPHABET,
     notes: [] as Note[],
@@ -29,6 +31,18 @@ export const noteApp = createSlice({
       state.editMode = "view";
       if (state.menuOpen) state.menuOpen = false;
     },
+    setData: (state, action) => {
+      const { notes, userId, passcode } = action.payload;
+
+      state.notes = notes;
+      state.currentLetter = notes[0]?.letter ?? "";
+      state.currentNote =
+        notes.find((note: Note) => note.letter === state.currentLetter) ??
+        ({} as Note);
+      state.userId = userId;
+      state.passcode = passcode;
+    },
+
     editNote: (state, action) => {
       const { id } = action.payload;
 
@@ -74,6 +88,8 @@ export const {
   setEditMode,
   setLetter,
   setNote,
+  setData,
+
   editNote,
   addNote,
   deleteNote,

@@ -5,11 +5,13 @@ import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import BookmarkURL from "./BookmarkURL";
+import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
 
 const Notes: React.FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
-  const { notes, currentLetter, currentNote, menuOpen } = useAppSelector(
+  const { notes, currentLetter, currentNote, menuOpen, editMode } = useAppSelector(
     (state) => state.noteApp
   );
 
@@ -74,13 +76,14 @@ const Notes: React.FC = () => {
               })}
             </div>
           </div>
+          <BookmarkURL />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-900 p-4 flex flex-col justify-between items-start">
+    <div className="bg-gray-900 p-4 flex flex-col justify-between items-stretch">
       <div>
         <h3 className="font-bold mb-4">{currentLetter.toUpperCase()}</h3>
         <div className="flex flex-col items-start">
@@ -106,6 +109,7 @@ const Notes: React.FC = () => {
           })}
         </div>
       </div>
+      <BookmarkURL />
     </div>
   );
 };

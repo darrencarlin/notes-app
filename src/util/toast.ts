@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 
-export const callToast = (note: string) =>
+export const callToast = (note: string, type: "warning" | "success") =>
   toast(note, {
+    type: type,
     position: "bottom-right",
     autoClose: 5000,
     hideProgressBar: false,
