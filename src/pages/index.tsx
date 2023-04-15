@@ -12,14 +12,17 @@ import { generateRandomString } from "@/util/functions/generateRandomString";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import axios from "axios";
+import Error from "./_error";
 
 interface Props {
   data: NoteType[];
   userId: string;
   passcode: string;
+  status?: any;
+  error?: boolean;
 }
 
-export default function Home({ data, userId, passcode }: Props) {
+export default function Home({ data, userId, passcode, status, error }: Props) {
   const { notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
@@ -53,6 +56,10 @@ export default function Home({ data, userId, passcode }: Props) {
   useEffect(() => {
     dispatch(setData({ notes: data, userId, passcode }));
   }, [dispatch, data, userId, passcode]);
+
+  if (error) {
+    return <Error statusCode={status} />;
+  }
 
   return (
     <Screen>
@@ -93,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = context.query.userId as string;
   const passcode = context.query.passcode as string;
 
-  const { data } = await axios.post(
+  const response = await axios.post(
     BASE_URL + "/api/notes",
     {
       userId,
@@ -101,6 +108,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
     DEFAULT_HEADERS
   );
+
+  console.log({ response });
+
+  const status = response.status;
+
+  if (status === 404) {
+    return {
+      props: { data: [], userId, passcode, error: true, statusCode: 404 },
+    };
+  }
+
+  const { data } = response;
 
   return {
     props: {

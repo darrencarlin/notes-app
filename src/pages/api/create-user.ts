@@ -12,6 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await db.collection("users").doc(userId).set({
       passcode,
+      createdAt: new Date().toISOString(),
     });
 
     res.status(200).json({ message: "Account Created" });
