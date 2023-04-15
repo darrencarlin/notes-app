@@ -102,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DEFAULT_HEADERS
   );
 
-  const status = response.status;
+  const { status } = response.data;
 
   if (status === 404) {
     return {
