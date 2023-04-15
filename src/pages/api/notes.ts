@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await db.collection("users").doc(userId).get();
 
     if (!user.exists) {
-      return res.status(200).json({ status: 404, message: "User not found" });
+      return res.status(200).json({ code: 404, message: "User not found" });
     }
 
     const passcodeMatch = user.data()?.passcode === passcode;

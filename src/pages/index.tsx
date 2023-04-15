@@ -102,9 +102,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DEFAULT_HEADERS
   );
 
-  const { status } = response.data;
+  const { code } = response.data;
 
-  if (status === 404) {
+  if (code === 404) {
     return {
       notFound: true,
     };
