@@ -9,7 +9,7 @@ const Controls: React.FC = () => {
   const noNotes = !notes.length;
 
   return (
-    <div className="bg-gray-700 py-2 px-4 sm:py-4 sm:px-8 flex  justify-between gap-4 items-center">
+    <div className="bg-gray-700 py-2 px-4 sm:py-4 sm:px-8 flex justify-start md:justify-between gap-4 items-center">
       {editMode !== "new" && (
         <Button
           text="New Note"

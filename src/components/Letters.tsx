@@ -14,7 +14,7 @@ const Letters: React.FC = () => {
 
   if (width < 768) {
     return (
-      <div className="flex items-center gap-4 overflow-x-scroll overflow-y-hidden px-4  bg-gray-900">
+      <div className="flex items-center gap-4 overflow-x-scroll overflow-y-hidden px-4 bg-gray-900">
         {letters.map((l) => {
           const hasNoNotes = !notes.some((n) => n.letter === l);
           const isActive = checkStringsMatch(l, currentLetter);
@@ -44,7 +44,7 @@ const Letters: React.FC = () => {
   }
 
   return (
-    <div className="no-scrollbar order-last h-10 sm:h-screen overflow-auto bg-gray-900 p-4">
+    <div className="no-scrollbar order-last h-10 sm:h-screen overflow-auto bg-gray-900 p-4 md:fixed md:top-0 md:right-0 md:w-[60px]">
       <div className="flex flex-col justify-evenly h-full no-scrollbar">
         {letters.map((l) => {
           const hasNoNotes = !notes.some((n) => n.letter === l);
