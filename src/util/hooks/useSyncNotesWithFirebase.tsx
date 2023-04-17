@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL, DEFAULT_HEADERS } from "../constants";
 import { Note } from "@/types";
 import { callToast } from "../toast";
+import { isDeepEqual } from "../functions/deepEqual";
 
 interface Props {
   notes: Note[];
@@ -11,9 +12,10 @@ interface Props {
 }
 
 function useSyncNotesWithFirebase({ notes, userId, passcode }: Props) {
+  const [previousNotes, setPreviousNotes] = useState<Note[]>(notes);
   useEffect(() => {
     const syncNotesWithFirebase = async () => {
-      const { status } = await axios.post(
+      await axios.post(
         BASE_URL + "/api/sync",
         {
           notes,
@@ -25,12 +27,17 @@ function useSyncNotesWithFirebase({ notes, userId, passcode }: Props) {
     };
 
     const interval = setInterval(() => {
-      syncNotesWithFirebase();
-      callToast("Notes synced...", "success", 2500);
+      const hasNewNotes = notes.length > previousNotes.length;
+      const hasChanged = !isDeepEqual(notes, previousNotes);
+      if (hasNewNotes || hasChanged) {
+        syncNotesWithFirebase();
+        setPreviousNotes(notes);
+        callToast("Notes synced...", "success", 2000);
+      }
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [notes, userId, passcode]);
+  }, [notes, userId, passcode, previousNotes]);
 }
 
 export default useSyncNotesWithFirebase;
