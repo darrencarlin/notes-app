@@ -2,7 +2,6 @@ import { type FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setLetter } from "@/store/state/noteApp";
 import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
-
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
 import { ReactNode } from "react-markdown/lib/ast-to-react";

@@ -2,12 +2,10 @@ import type { FC, ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setEditMode, toggleModal } from "@/store/state/noteApp";
 import Button from "../Button";
-import useWindowWidth from "@/util/hooks/useWindowWidth";
 
 const Controls: FC = () => {
   const { editMode, notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
-  const width = useWindowWidth();
   const noNotes = !notes.length;
 
   return (

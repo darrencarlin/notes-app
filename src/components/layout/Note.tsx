@@ -14,6 +14,10 @@ import TextArea from "../inputs/TextArea";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
 
+const Title: FC<{ title: string }> = ({ title }) => (
+  <h1 className="text-2xl font-bold mb-4">{title}</h1>
+);
+
 const Note: FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
   const [newNoteBody, setNewNoteBody] = useState<string>("");
@@ -66,6 +70,10 @@ const Note: FC = () => {
     const status = response.status;
     const { message } = response.data;
 
+    if (status === 404) {
+      return callToast(message, "warning");
+    }
+
     if (status === 200) {
       dispatch(deleteNote(id));
       callToast(message, "success");
@@ -80,7 +88,7 @@ const Note: FC = () => {
   if (editMode === "new") {
     return (
       <NoteLayout>
-        <h1 className="text-2xl font-bold mb-4">New Note</h1>
+        <Title title="New Note" />
         <HorizontalRule />
 
         <form className="flex flex-col items-end">
@@ -113,7 +121,7 @@ const Note: FC = () => {
       <NoteLayout>
         {editMode !== "edit" && (
           <>
-            <h1 className="text-2xl font-bold mb-4">{currentNote.title}</h1>
+            <Title title={currentNote.title} />
             <HorizontalRule />
           </>
         )}
@@ -135,9 +143,7 @@ const Note: FC = () => {
       <Modal
         title="Delete Note"
         body="Are you sure you want to delete this note? This action cannot be undone."
-        action={() => {
-          handleDeleteNote(currentNote.id);
-        }}
+        action={() => handleDeleteNote(currentNote.id)}
         actionText="Delete"
       />
     </>

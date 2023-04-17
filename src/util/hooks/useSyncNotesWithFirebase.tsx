@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BASE_URL, DEFAULT_HEADERS } from "../constants";
 import { Note } from "@/types";
+import { callToast } from "../toast";
 
 interface Props {
   notes: Note[];
@@ -21,14 +22,11 @@ function useSyncNotesWithFirebase({ notes, userId, passcode }: Props) {
         },
         DEFAULT_HEADERS
       );
-
-      if (status === 200) {
-        console.log("Notes synced...");
-      }
     };
 
     const interval = setInterval(() => {
       syncNotesWithFirebase();
+      callToast("Notes synced...", "success", 2500);
     }, 30000);
 
     return () => clearInterval(interval);

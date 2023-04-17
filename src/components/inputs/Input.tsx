@@ -1,9 +1,17 @@
+import classNames from "classnames";
 import type { InputHTMLAttributes, FC } from "react";
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {}
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
+}
 
-const Input: FC<Props> = ({ ...props }) => {
-  return <input {...props} className="w-full bg-gray-700 p-4 mb-4" />;
+const Input: FC<Props> = ({ className, ...props }) => {
+  return (
+    <input
+      {...props}
+      className={className ? className : "w-full bg-gray-700 p-4 mb-4"}
+    />
+  );
 };
 
 export default Input;

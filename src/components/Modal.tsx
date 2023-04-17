@@ -12,7 +12,7 @@ interface Props {
   actionText: string;
 }
 
-const Modal: FC<Props> = ({ title, body, action, actionText }) => {
+const Modal: FC<Props> = ({ body, action, actionText }) => {
   const { modalOpen } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
@@ -34,7 +34,7 @@ const Modal: FC<Props> = ({ title, body, action, actionText }) => {
       {modalOpen && (
         <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
           <div className="relative w-fit rounded bg-white flex flex-col gap-4 p-6">
-            <Text>{body}</Text>
+            <Text color="gray">{body}</Text>
             <div className="flex justify-end gap-4">
               <Button text="Cancel" onClick={() => dispatch(toggleModal())} />
               <Button

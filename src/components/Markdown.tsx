@@ -31,12 +31,12 @@ interface MarkdownProps {
 const Markdown: FC<MarkdownProps> = ({ markdown }) => {
   const syntaxTheme = oneDark;
 
-  const MarkdownComponents: object = {
+  const MarkdownComponents = {
     code({ className, ...props }: any) {
-      const hasLang = /language-(\w+)/.exec(className || "");
+      const hasLang = /language-(\w+)/.exec(className) ?? "";
 
       return hasLang ? (
-        <SyntaxHighlighter style={syntaxTheme} language={hasLang[1]}>
+        <SyntaxHighlighter style={syntaxTheme} language={hasLang[1] ?? ""}>
           {props.children}
         </SyntaxHighlighter>
       ) : (

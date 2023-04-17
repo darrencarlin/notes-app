@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import classNames from "classnames";
 import { type ButtonHTMLAttributes, type ReactNode } from "react";
-import useWindowWidth from "@/util/hooks/useWindowWidth";
 
 const colorMap = {
   none: "text-gray-600",

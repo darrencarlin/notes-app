@@ -17,7 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .doc(id)
       .get();
     if (!docRef.exists) {
-      return res.status(404).json({ message: "Note not found" });
+      return res
+        .status(404)
+        .json({ message: "Note not found, please try again in 30 seconds" });
     }
 
     await db.collection("users").doc(userId).collection("notes").doc(id).delete();

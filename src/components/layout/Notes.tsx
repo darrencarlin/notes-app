@@ -6,17 +6,35 @@ import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
 import { useEffect, useState, type FC, ReactNode } from "react";
 import BookmarkURL from "../BookmarkURL";
+import Input from "../inputs/Input";
+
+const Title: FC<{ title: string }> = ({ title }) => (
+  <h3 className="font-bold mb-4 uppercase">{title}</h3>
+);
 
 const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
-  const { notes, currentLetter, currentNote, menuOpen, editMode } = useAppSelector(
+  const { notes, currentLetter, currentNote, menuOpen } = useAppSelector(
     (state) => state.noteApp
   );
 
   const dispatch = useAppDispatch();
 
   const width = useWindowWidth();
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "") {
+      setFilteredNotes(
+        notes.filter((n) => n.title[0].toLowerCase() === currentLetter.toLowerCase())
+      );
+    } else {
+      const searchedNotes = filteredNotes.filter((n) =>
+        n.title.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setFilteredNotes(searchedNotes);
+    }
+  };
 
   useEffect(() => {
     const filteredNotes = notes.filter(
@@ -46,7 +64,12 @@ const Notes: FC = () => {
 
         <div className={classnames}>
           <div>
-            <h3 className="font-bold mb-4 uppercase">{currentLetter}</h3>
+            <Input
+              className="h-10 w-full bg-gray-700 p-4 mb-4"
+              placeholder="Search"
+              onChange={handleSearch}
+            />
+            <Title title={currentLetter} />
             <div className="flex flex-col items-start">
               {filteredNotes.map((n) => {
                 const isActive = checkStringsMatch(
@@ -82,29 +105,38 @@ const Notes: FC = () => {
   return (
     <NotesLayout>
       <div>
-        <h3 className="font-bold mb-4 uppercase">{currentLetter}</h3>
-        <div className="flex flex-col items-start">
-          {filteredNotes.map((n) => {
-            const isActive = checkStringsMatch(currentNote?.title ?? "", n.title);
-            const buttonClasses = classNames(
-              {
-                "bg-gray-800 rounded": isActive,
-              },
-              "mb-2 font-light tracking-wide p-2 text-left"
-            );
+        <Input
+          className="h-10 w-full bg-gray-700 p-4 mb-4"
+          placeholder="Search"
+          onChange={handleSearch}
+        />
+        <Title title={currentLetter} />
+        {filteredNotes.length > 0 ? (
+          <div className="flex flex-col items-start">
+            {filteredNotes.map((n) => {
+              const isActive = checkStringsMatch(currentNote?.title ?? "", n.title);
+              const buttonClasses = classNames(
+                {
+                  "bg-gray-800 rounded": isActive,
+                },
+                "mb-2 font-light tracking-wide p-2 text-left"
+              );
 
-            return (
-              <button
-                key={n.id}
-                type="button"
-                onClick={() => dispatch(setNote(n))}
-                className={buttonClasses}
-              >
-                {n.title}
-              </button>
-            );
-          })}
-        </div>
+              return (
+                <button
+                  key={n.id}
+                  type="button"
+                  onClick={() => dispatch(setNote(n))}
+                  className={buttonClasses}
+                >
+                  {n.title}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-gray-500">No notes found</p>
+        )}
       </div>
       <BookmarkURL />
     </NotesLayout>
