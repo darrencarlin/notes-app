@@ -5,8 +5,8 @@ This app is a simple notes app that allows you to create, edit, and delete notes
 [Live App](https://alpha-notes.vercel.app/)
 
 - Uses Markdown for formatting.
-- Notes are stored in firebase using a unique URL generated when a user lands on the home page.
+- Notes are stored in firebase using a unique URL generated when a user lands on the home page. (Syncs every 30 seconds if changes are detected)
 - Notes are stored alphabetically by title.
 
+![screen (2)](https://user-images.githubusercontent.com/30006190/232582071-664f725e-53b3-48c9-b4bf-7eaffe8b59d9.png)
 
-![localhost_3000__userId=msrZUDKqKB9sBMvIWms1 passcode=X37Z3zurSU](https://user-images.githubusercontent.com/30006190/232581571-09db11b4-a2f7-4425-b47b-1b96ec20be61.png)
