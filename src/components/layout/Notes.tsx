@@ -63,7 +63,7 @@ const Notes: FC = () => {
         )}
 
         <div className={classnames}>
-          <div>
+          <div className="w-full">
             <Input
               className="h-10 w-full bg-gray-700 p-4 mb-4"
               placeholder="Search"
