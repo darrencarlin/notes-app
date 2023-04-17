@@ -1,7 +1,9 @@
+import type { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { toggleModal } from "@/store/state/noteApp";
 import React from "react";
 import Button from "./Button";
+import Text from "./Text";
 
 interface Props {
   title: string;
@@ -10,7 +12,7 @@ interface Props {
   actionText: string;
 }
 
-const Modal: React.FC<Props> = ({ title, body, action, actionText }) => {
+const Modal: FC<Props> = ({ title, body, action, actionText }) => {
   const { modalOpen } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
@@ -32,7 +34,7 @@ const Modal: React.FC<Props> = ({ title, body, action, actionText }) => {
       {modalOpen && (
         <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
           <div className="relative w-fit rounded bg-white flex flex-col gap-4 p-6">
-            <p className="text-gray-700">{body}</p>
+            <Text>{body}</Text>
             <div className="flex justify-end gap-4">
               <Button text="Cancel" onClick={() => dispatch(toggleModal())} />
               <Button

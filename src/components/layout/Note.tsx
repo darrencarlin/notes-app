@@ -2,19 +2,19 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
 import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
 import { callToast } from "@/util/toast";
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, FC, ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
-import Button from "./Button";
-import HorizontalRule from "./HorizontalRule";
-import Markdown from "./Markdown";
-import Modal from "./Modal";
-import NoNotesFound from "./NoNotesFound";
-import Input from "./inputs/Input";
-import TextArea from "./inputs/TextArea";
+import Button from "../Button";
+import HorizontalRule from "../HorizontalRule";
+import Markdown from "../Markdown";
+import Modal from "../Modal";
+import NoNotesFound from "../NoNotesFound";
+import Input from "../inputs/Input";
+import TextArea from "../inputs/TextArea";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
 
-const Note: React.FC = () => {
+const Note: FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
   const [newNoteBody, setNewNoteBody] = useState<string>("");
   const { currentNote, editMode, userId } = useAppSelector((state) => state.noteApp);
@@ -79,7 +79,7 @@ const Note: React.FC = () => {
 
   if (editMode === "new") {
     return (
-      <div className="bg-gray-800 py-2 px-4 sm:py-4 sm:px-8">
+      <NoteLayout>
         <h1 className="text-2xl font-bold mb-4">New Note</h1>
         <HorizontalRule />
 
@@ -104,13 +104,13 @@ const Note: React.FC = () => {
             text="Save Note"
           />
         </form>
-      </div>
+      </NoteLayout>
     );
   }
 
   return (
     <>
-      <div className="bg-gray-800 sm:py-4 sm:px-8 p-4 w-screen sm:w-auto">
+      <NoteLayout>
         {editMode !== "edit" && (
           <>
             <h1 className="text-2xl font-bold mb-4">{currentNote.title}</h1>
@@ -131,7 +131,7 @@ const Note: React.FC = () => {
         ) : (
           <Markdown markdown={currentNote.body} />
         )}
-      </div>
+      </NoteLayout>
       <Modal
         title="Delete Note"
         body="Are you sure you want to delete this note? This action cannot be undone."
@@ -143,5 +143,11 @@ const Note: React.FC = () => {
     </>
   );
 };
+
+const NoteLayout: FC<{ children: ReactNode }> = ({ children }) => (
+  <section className="bg-gray-800 p-4 lg:p-8 overflow-y-scroll h-[calc(100vh-150px)] lg:h-[calc(100vh-50px)] no-scrollbar">
+    {children}
+  </section>
+);
 
 export default Note;

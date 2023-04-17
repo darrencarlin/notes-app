@@ -1,5 +1,6 @@
 import { useAppSelector } from "@/store/hooks/redux";
 import { BASE_URL } from "@/util/constants";
+import Text from "./Text";
 
 const NoNotesFound = () => {
   const { userId, passcode } = useAppSelector((state) => state.noteApp);
@@ -9,7 +10,8 @@ const NoNotesFound = () => {
       <h1 className="text-2xl font-bold my-4">
         No notes found, Click &apos;New Note&apos; to get started
       </h1>
-      <p className="mb-4">
+
+      <Text>
         Bookmark this{" "}
         <a
           className="underline text-blue-400"
@@ -18,8 +20,9 @@ const NoNotesFound = () => {
           LINK
         </a>{" "}
         to access your notes from anywhere. It is unique to you.
-      </p>
-      <p className="mb-4">
+      </Text>
+
+      <Text>
         Notes support{" "}
         <a
           target="_blank"
@@ -30,7 +33,7 @@ const NoNotesFound = () => {
           markdown
         </a>{" "}
         and syntax highlighting for the following languages:
-      </p>
+      </Text>
       <ul>
         <li className="mb-2">
           TSX - <code className="bg-gray-500 rounded p-1">tsx</code>

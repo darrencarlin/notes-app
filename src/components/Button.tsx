@@ -1,5 +1,7 @@
+import type { FC } from "react";
 import classNames from "classnames";
 import { type ButtonHTMLAttributes, type ReactNode } from "react";
+import useWindowWidth from "@/util/hooks/useWindowWidth";
 
 const colorMap = {
   none: "text-gray-600",
@@ -29,7 +31,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "bg-blue-600";
 }
 
-const Button: React.FC<Props> = ({
+const Button: FC<Props> = ({
   text,
   icon,
   fullWidth,
@@ -47,7 +49,7 @@ const Button: React.FC<Props> = ({
       "flex items-center gap-4": hasIcon,
       "w-full": fullWidth,
     },
-    `${backgroundColor} ${textColor} py-1 px-3 font-medium text-sm tracking-wider rounded ${hoverColor}`
+    `${backgroundColor} ${textColor} p-1 py-1 sm:px-2 font-medium text-sm tracking-wider rounded ${hoverColor}`
   );
 
   return (

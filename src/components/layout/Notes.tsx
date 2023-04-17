@@ -4,11 +4,10 @@ import { Note } from "@/types";
 import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import BookmarkURL from "./BookmarkURL";
-import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
+import { useEffect, useState, type FC, ReactNode } from "react";
+import BookmarkURL from "../BookmarkURL";
 
-const Notes: React.FC = () => {
+const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
   const { notes, currentLetter, currentNote, menuOpen, editMode } = useAppSelector(
@@ -26,30 +25,28 @@ const Notes: React.FC = () => {
     setFilteredNotes(filteredNotes);
   }, [currentLetter, notes]);
 
-  if (width < 768) {
+  if (width < 1024) {
     const classnames = classNames(
       {
-        "-translate-x-full h-screen": !menuOpen,
-        "block absolute transform translate-x-0 w-full h-screen ease-in-out transition-all duration-300":
+        "fixed top-[50px] left-0 transform -translate-x-full w-full h-[calc(100vh-100px)] border-y border-gray-800":
+          !menuOpen,
+        "fixed top-[50px] left-0 transform translate-x-0 w-full h-[calc(100vh-100px)] border-y border-gray-800":
           menuOpen,
       },
-      "bg-gray-900 p-4 flex flex-col justify-between items-start transition-all ease-in-out delay-150"
+      "bg-gray-900 p-4 flex flex-col justify-between items-start ease-in-out transition-all duration-300"
     );
 
     return (
-      <div className="bg-gray-900">
+      <NotesLayout>
         {notes.length > 0 && (
-          <button
-            className="text-white block absolute top-2 right-4 z-10"
-            onClick={() => dispatch(toggleMenu())}
-          >
-            Menu
+          <button className="z-10" onClick={() => dispatch(toggleMenu())}>
+            {menuOpen ? "Close" : "Open"}
           </button>
         )}
 
         <div className={classnames}>
           <div>
-            <h3 className="font-bold mb-4">{currentLetter.toUpperCase()}</h3>
+            <h3 className="font-bold mb-4 uppercase">{currentLetter}</h3>
             <div className="flex flex-col items-start">
               {filteredNotes.map((n) => {
                 const isActive = checkStringsMatch(
@@ -60,7 +57,7 @@ const Notes: React.FC = () => {
                   {
                     "bg-gray-800 rounded": isActive,
                   },
-                  "mb-2 font-light tracking-wide p-2"
+                  "mb-2 font-light tracking-wide p-2 text-left"
                 );
 
                 return (
@@ -78,14 +75,14 @@ const Notes: React.FC = () => {
           </div>
           <BookmarkURL />
         </div>
-      </div>
+      </NotesLayout>
     );
   }
 
   return (
-    <div className="bg-gray-900 p-4 flex flex-col justify-between items-stretch">
+    <NotesLayout>
       <div>
-        <h3 className="font-bold mb-4">{currentLetter.toUpperCase()}</h3>
+        <h3 className="font-bold mb-4 uppercase">{currentLetter}</h3>
         <div className="flex flex-col items-start">
           {filteredNotes.map((n) => {
             const isActive = checkStringsMatch(currentNote?.title ?? "", n.title);
@@ -93,7 +90,7 @@ const Notes: React.FC = () => {
               {
                 "bg-gray-800 rounded": isActive,
               },
-              "mb-2 font-light tracking-wide p-2"
+              "mb-2 font-light tracking-wide p-2 text-left"
             );
 
             return (
@@ -110,8 +107,14 @@ const Notes: React.FC = () => {
         </div>
       </div>
       <BookmarkURL />
-    </div>
+    </NotesLayout>
   );
 };
+
+const NotesLayout: FC<{ children: ReactNode }> = ({ children }) => (
+  <section className="bg-gray-900 p-4 flex flex-col justify-between items-end lg:items-start">
+    {children}
+  </section>
+);
 
 export default Notes;

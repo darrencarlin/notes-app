@@ -1,10 +1,11 @@
+import type { FC } from "react";
 interface Props {
   children: React.ReactNode;
 }
 
-const Screen: React.FC<Props> = ({ children }) => {
+const Screen: FC<Props> = ({ children }) => {
   return (
-    <main className="grid grid-cols-1 grid-rows-[40px_auto_40px] md:grid-rows-none md:grid-cols-[300px_1fr_60px] h-screen">
+    <main className="grid grid-cols-1 grid-rows-[50px_1fr_50px] min-h-[100dvh] lg:grid-cols-[250px_1fr_auto] xl:grid-cols-[300px_1fr_auto] lg:grid-rows-1">
       {children}
     </main>
   );

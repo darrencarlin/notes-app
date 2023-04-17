@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import classNames from "classnames";
 import { type TextareaHTMLAttributes } from "react";
 
@@ -5,7 +6,7 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   height?: boolean;
 }
 
-const TextArea: React.FC<Props> = ({ height = false, ...props }) => {
+const TextArea: FC<Props> = ({ height = false, ...props }) => {
   const classnames = classNames(
     {
       "h-96": height,

@@ -1,7 +1,7 @@
-import Controls from "@/components/Controls";
-import Letters from "@/components/Letters";
-import Note from "@/components/Note";
-import Notes from "@/components/Notes";
+import Controls from "@/components/layout/Controls";
+import Letters from "@/components/layout/Letters";
+import Note from "@/components/layout/Note";
+import Notes from "@/components/layout/Notes";
 import Screen from "@/components/layout/Screen";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setData } from "@/store/state/noteApp";
@@ -12,6 +12,7 @@ import { generateRandomString } from "@/util/functions/generateRandomString";
 import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import axios from "axios";
+import useSyncNotesWithFirebase from "@/util/hooks/useSyncNotesWithFirebase";
 
 interface Props {
   data: NoteType[];
@@ -24,31 +25,7 @@ export default function Home({ data, userId, passcode }: Props) {
   const dispatch = useAppDispatch();
 
   // Start interval to sync notes to firebase
-  useEffect(() => {
-    const syncNotesWithFirebase = async () => {
-      const { status } = await axios.post(
-        BASE_URL + "/api/sync",
-        {
-          notes,
-          userId,
-          passcode,
-        },
-        DEFAULT_HEADERS
-      );
-
-      if (status === 200) {
-        console.log("Notes synced...");
-      }
-    };
-
-    const interval = setInterval(() => {
-      syncNotesWithFirebase();
-    }, 30000);
-
-    return () => clearInterval(interval);
-  });
-
-  // Set data from firebase and auth to store
+  useSyncNotesWithFirebase({ notes, userId, passcode });
 
   useEffect(() => {
     dispatch(setData({ notes: data, userId, passcode }));
@@ -57,10 +34,10 @@ export default function Home({ data, userId, passcode }: Props) {
   return (
     <Screen>
       <Notes />
-      <div className="grid grid-rows-[60px_auto] bg-gray-800">
+      <section className="grid grid-rows-[50px_auto] bg-gray-800">
         <Controls />
         <Note />
-      </div>
+      </section>
       <Letters />
     </Screen>
   );

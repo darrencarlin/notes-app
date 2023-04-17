@@ -1,15 +1,17 @@
+import type { FC, ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setEditMode, toggleModal } from "@/store/state/noteApp";
-import Button from "./Button";
+import Button from "../Button";
+import useWindowWidth from "@/util/hooks/useWindowWidth";
 
-const Controls: React.FC = () => {
+const Controls: FC = () => {
   const { editMode, notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
-
+  const width = useWindowWidth();
   const noNotes = !notes.length;
 
   return (
-    <div className="bg-gray-700 py-2 px-4 sm:py-4 sm:px-8 flex justify-start md:justify-between gap-4 items-center">
+    <ControlsLayout>
       {editMode !== "new" && (
         <Button
           text="New Note"
@@ -30,7 +32,7 @@ const Controls: React.FC = () => {
             <Button
               backgroundColor="bg-blue-600"
               onClick={() => dispatch(setEditMode("view"))}
-              text="Preview Note"
+              text="View Note"
             ></Button>
           )}
           {editMode === "edit" ||
@@ -43,8 +45,14 @@ const Controls: React.FC = () => {
             ))}
         </div>
       )}
-    </div>
+    </ControlsLayout>
   );
 };
+
+const ControlsLayout: FC<{ children: ReactNode }> = ({ children }) => (
+  <section className="bg-gray-700 p-4 flex justify-between gap-4 items-center">
+    {children}
+  </section>
+);
 
 export default Controls;
