@@ -33,9 +33,12 @@ export const noteApp = createSlice({
     },
     setData: (state, action) => {
       const { notes, userId, passcode } = action.payload;
-
       state.notes = notes;
-      state.currentLetter = notes[0]?.letter ?? "";
+      state.currentLetter = notes.reduce((acc: string, note: Note) => {
+        if (note.letter < acc) return note.letter;
+        return acc;
+      }, "z");
+
       state.currentNote =
         notes.find((note: Note) => note.letter === state.currentLetter) ??
         ({} as Note);
@@ -89,7 +92,6 @@ export const {
   setLetter,
   setNote,
   setData,
-
   editNote,
   addNote,
   deleteNote,
