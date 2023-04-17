@@ -33,14 +33,16 @@ const Markdown: FC<MarkdownProps> = ({ markdown }) => {
 
   const MarkdownComponents = {
     code({ className, ...props }: any) {
-      const hasLang = /language-(\w+)/.exec(className) ?? "";
+      const hasLang = /language-(\w+)/.exec(className);
+
+      const { inline, ...restProps } = props;
 
       return hasLang ? (
-        <SyntaxHighlighter style={syntaxTheme} language={hasLang[1] ?? ""}>
+        <SyntaxHighlighter style={syntaxTheme} language={hasLang[1]}>
           {props.children}
         </SyntaxHighlighter>
       ) : (
-        <code className={className} {...props} />
+        <code className={className} {...restProps} inline={String(inline)} />
       );
     },
   };

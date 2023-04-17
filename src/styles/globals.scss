@@ -82,6 +82,15 @@
   pre {
     margin-bottom: 1rem /* 16px */;
   }
+
+  code {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    padding: 0.25rem 0.5rem /* 4px 8px */;
+    border-radius: 0.25rem /* 4px */;
+    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+    color: white;
+  }
 }
 
 .Toastify__close-button > svg {

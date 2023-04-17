@@ -45,15 +45,15 @@ const Button: FC<Props> = ({
   const classnames = classNames(
     {
       "border-2 border-gray-300": backgroundColor === "none",
-      "flex items-center gap-4": hasIcon,
+      "flex items-center gap-2": hasIcon,
       "w-full": fullWidth,
     },
-    `${backgroundColor} ${textColor} p-1 py-1 sm:px-2 font-medium text-sm tracking-wider rounded ${hoverColor}`
+    `${backgroundColor} ${textColor} p-1 py-1 sm:px-2 font-medium text-sm tracking-wider rounded ${hoverColor} hover:shadow-md transition-all duration-100 ease-in-out`
   );
 
   return (
     <button {...props} className={classnames}>
-      {icon} {text}
+      {text} {icon}
     </button>
   );
 };

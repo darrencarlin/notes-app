@@ -57,14 +57,15 @@ const Letters: FC = () => {
           {
             "text-gray-700": hasNoNotes,
             "text-white font-bold": !hasNoNotes,
-            "cursor-default": hasNoNotes,
+            "cursor-default hover:bg-gray-900": hasNoNotes,
             "bg-gray-800 rounded": isActive,
           },
-          "uppercase"
+          "uppercase transition-all duration-100 ease-in-out hover:bg-gray-700 hover:rounded hover:shadow-md"
         );
 
         return (
           <button
+            disabled={hasNoNotes}
             type="button"
             key={l}
             className={`${buttonClasses} `}

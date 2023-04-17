@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { useEffect, useState, type FC, ReactNode } from "react";
 import BookmarkURL from "../BookmarkURL";
 import Input from "../inputs/Input";
+import SearchInput from "../inputs/SearchInput";
 
 const Title: FC<{ title: string }> = ({ title }) => (
   <h3 className="font-bold mb-4 uppercase">{title}</h3>
@@ -43,6 +44,9 @@ const Notes: FC = () => {
     setFilteredNotes(filteredNotes);
   }, [currentLetter, notes]);
 
+  const hasNotes = notes.length > 0;
+  const hasFilteredNotes = filteredNotes.length > 0;
+
   if (width < 1024) {
     const classnames = classNames(
       {
@@ -56,7 +60,7 @@ const Notes: FC = () => {
 
     return (
       <NotesLayout>
-        {notes.length > 0 && (
+        {hasNotes && (
           <button className="z-10" onClick={() => dispatch(toggleMenu())}>
             {menuOpen ? "Close" : "Open"}
           </button>
@@ -64,11 +68,7 @@ const Notes: FC = () => {
 
         <div className={classnames}>
           <div className="w-full">
-            <Input
-              className="h-10 w-full bg-gray-700 p-4 mb-4"
-              placeholder="Search"
-              onChange={handleSearch}
-            />
+            <SearchInput handleSearch={handleSearch} />
             <Title title={currentLetter} />
             <div className="flex flex-col items-start">
               {filteredNotes.map((n) => {
@@ -104,14 +104,10 @@ const Notes: FC = () => {
 
   return (
     <NotesLayout>
-      <div>
-        <Input
-          className="h-10 w-full bg-gray-700 p-4 mb-4"
-          placeholder="Search"
-          onChange={handleSearch}
-        />
+      <div className="w-full">
+        <SearchInput handleSearch={handleSearch} />
         <Title title={currentLetter} />
-        {filteredNotes.length > 0 ? (
+        {hasFilteredNotes ? (
           <div className="flex flex-col items-start">
             {filteredNotes.map((n) => {
               const isActive = checkStringsMatch(currentNote?.title ?? "", n.title);
@@ -119,7 +115,7 @@ const Notes: FC = () => {
                 {
                   "bg-gray-800 rounded": isActive,
                 },
-                "mb-2 font-light tracking-wide p-2 text-left"
+                "mb-2 font-light tracking-wide p-2 text-left hover:bg-gray-700 hover:shadow-md transition-all duration-300 ease-in-out hover:rounded"
               );
 
               return (
