@@ -1,10 +1,9 @@
-import { persistor, store } from "@/store/state";
 import "@/styles/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { PersistGate } from "redux-persist/integration/react";
+import store from "@/store/state";
 
 export default function App({
   Component,
@@ -12,10 +11,8 @@ export default function App({
 }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </PersistGate>
+      <Component {...pageProps} />
+      <ToastContainer />
     </Provider>
   );
 }
