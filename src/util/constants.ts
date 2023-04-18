@@ -37,3 +37,5 @@ export const DEFAULT_HEADERS = {
     "Content-Type": "application/json",
   },
 };
+
+export const IS_WINDOW = typeof window !== "undefined";
