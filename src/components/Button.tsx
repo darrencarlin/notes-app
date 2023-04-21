@@ -1,6 +1,5 @@
-import type { FC } from "react";
+import type { FC, ReactNode, ButtonHTMLAttributes } from "react";
 import classNames from "classnames";
-import { type ButtonHTMLAttributes, type ReactNode } from "react";
 
 const colorMap = {
   none: "text-gray-600",
@@ -37,7 +36,7 @@ const Button: FC<Props> = ({
   backgroundColor = "none",
   ...props
 }) => {
-  const hasIcon = icon ? true : false;
+  const hasIcon = !!icon;
 
   const textColor = colorMap[backgroundColor];
   const hoverColor = hoverColorMap[backgroundColor];

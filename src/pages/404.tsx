@@ -1,7 +1,7 @@
 import Text from "@/components/Text";
 import Link from "next/link";
 
-export default function Custom404() {
+export default function Custom404(): JSX.Element {
   return (
     <div className="w-screen h-screen bg-gray-900 flex justify-center items-center">
       <div className="max-w-xl">

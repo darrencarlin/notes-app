@@ -1,12 +1,15 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> {
   const { userId, passcode } = req.body;
 
   // validate input
   if (!userId || !passcode) {
-    return res.status(400).json({ message: "Invalid input" });
+    res.status(400).json({ message: "Invalid input" });
   }
 
   try {
@@ -21,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.error(error);
 
     // send error response
-    return res
+    res
       .status(500)
       .json({ message: "Unable to create account. Please try again later." });
   }

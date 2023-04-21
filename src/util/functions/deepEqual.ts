@@ -1,12 +1,10 @@
-type Object = Record<string, any>;
-
-export const isDeepEqual = (object1: Object, object2: Object) => {
+export const isDeepEqual = (object1: any, object2: any): boolean => {
   const objKeys1 = Object.keys(object1);
   const objKeys2 = Object.keys(object2);
 
   if (objKeys1.length !== objKeys2.length) return false;
 
-  for (var key of objKeys1) {
+  for (const key of objKeys1) {
     const value1 = object1[key];
     const value2 = object2[key];
 
@@ -22,6 +20,6 @@ export const isDeepEqual = (object1: Object, object2: Object) => {
   return true;
 };
 
-const isObject = (object: Object) => {
+const isObject = (object: any): boolean => {
   return object != null && typeof object === "object";
 };

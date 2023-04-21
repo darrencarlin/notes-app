@@ -2,7 +2,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
 import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
 import { callToast } from "@/util/toast";
-import { useState, type ChangeEvent, FC, ReactNode } from "react";
+import { useState } from "react";
+import type { ChangeEvent, FC, ReactNode } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../Button";
 import HorizontalRule from "../HorizontalRule";
@@ -24,7 +25,7 @@ const Note: FC = () => {
   const { currentNote, editMode, userId } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
-  const saveNote = () => {
+  const saveNote = (): void => {
     const note = {
       id: uuidv4(),
       title: newNoteTitle,
@@ -37,7 +38,7 @@ const Note: FC = () => {
     callToast("Note created ✏️", "success");
   };
 
-  const updateNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const updateNote = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     const updatedNote = {
       id: currentNote.id,
       title: currentNote.title,
@@ -47,7 +48,7 @@ const Note: FC = () => {
     dispatch(editNote(updatedNote));
   };
 
-  const updateTitle = (e: ChangeEvent<HTMLInputElement>) => {
+  const updateTitle = (e: ChangeEvent<HTMLInputElement>): void => {
     const updatedNote = {
       id: currentNote.id,
       title: e.target.value,
@@ -57,7 +58,7 @@ const Note: FC = () => {
     dispatch(editNote(updatedNote));
   };
 
-  const handleDeleteNote = async (id: string) => {
+  const handleDeleteNote = async (id: string): Promise<void> => {
     const response = await axios.post(
       BASE_URL + "/api/delete",
       {
@@ -143,7 +144,7 @@ const Note: FC = () => {
       <Modal
         title="Delete Note"
         body="Are you sure you want to delete this note? This action cannot be undone."
-        action={() => handleDeleteNote(currentNote.id)}
+        action={async () => await handleDeleteNote(currentNote.id)}
         actionText="Delete"
       />
     </>

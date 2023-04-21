@@ -24,22 +24,6 @@ const Controls: FC = () => {
       )}
       {!noNotes && (
         <div className="flex gap-4">
-          {editMode === "view" && (
-            <Button
-              icon={width >= 425 ? <SlNote /> : null}
-              backgroundColor="bg-green-600"
-              onClick={() => dispatch(setEditMode("edit"))}
-              text="Edit Note"
-            ></Button>
-          )}
-          {editMode === "edit" && (
-            <Button
-              icon={width >= 425 ? <SlEye /> : null}
-              backgroundColor="bg-blue-600"
-              onClick={() => dispatch(setEditMode("view"))}
-              text="View Note"
-            ></Button>
-          )}
           {editMode === "edit" ||
             (editMode === "view" && (
               <Button
@@ -49,6 +33,23 @@ const Controls: FC = () => {
                 onClick={() => dispatch(toggleModal())}
               />
             ))}
+          {editMode === "view" && (
+            <Button
+              icon={width >= 425 ? <SlNote /> : null}
+              backgroundColor="bg-green-600"
+              onClick={() => dispatch(setEditMode("edit"))}
+              text="Edit Note"
+            ></Button>
+          )}
+
+          {editMode === "edit" && (
+            <Button
+              icon={width >= 425 ? <SlEye /> : null}
+              backgroundColor="bg-blue-600"
+              onClick={() => dispatch(setEditMode("view"))}
+              text="View Note"
+            ></Button>
+          )}
         </div>
       )}
     </ControlsLayout>

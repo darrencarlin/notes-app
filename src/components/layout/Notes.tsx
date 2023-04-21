@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteApp";
-import { Note } from "@/types";
+import type { Note } from "@/types";
 import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
-import { useEffect, useState, type FC, ReactNode } from "react";
+import { useEffect, useState } from "react";
+import type { ReactNode, FC } from "react";
 import BookmarkURL from "../BookmarkURL";
-import Input from "../inputs/Input";
 import SearchInput from "../inputs/SearchInput";
 
 const Title: FC<{ title: string }> = ({ title }) => (
@@ -24,7 +24,7 @@ const Notes: FC = () => {
 
   const width = useWindowWidth();
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (e.target.value === "") {
       setFilteredNotes(
         notes.filter((n) => n.title[0].toLowerCase() === currentLetter.toLowerCase())

@@ -16,7 +16,7 @@ const Modal: FC<Props> = ({ body, action, actionText }) => {
   const { modalOpen } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 
-  const handleModalAction = () => {
+  const handleModalAction = (): void => {
     action();
     dispatch(toggleModal());
   };

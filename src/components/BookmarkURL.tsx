@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/store/hooks/redux";
 import { BASE_URL } from "@/util/constants";
 
-const BookmarkURL = () => {
+const BookmarkURL = (): JSX.Element => {
   const { userId, passcode } = useAppSelector((state) => state.noteApp);
 
   return (

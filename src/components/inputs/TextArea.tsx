@@ -1,6 +1,5 @@
-import type { FC } from "react";
+import type { FC, TextareaHTMLAttributes } from "react";
 import classNames from "classnames";
-import { type TextareaHTMLAttributes } from "react";
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   height?: boolean;

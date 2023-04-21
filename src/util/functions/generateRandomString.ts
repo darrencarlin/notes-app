@@ -1,4 +1,4 @@
-export const generateRandomString = (length: number) => {
+export const generateRandomString = (length: number): string => {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";

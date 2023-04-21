@@ -9,7 +9,7 @@ import { type Note as NoteType } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
 import { generateRandomString } from "@/util/functions/generateRandomString";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import axios from "axios";
 import useSyncNotesWithFirebase from "@/util/hooks/useSyncNotesWithFirebase";
@@ -20,7 +20,7 @@ interface Props {
   passcode: string;
 }
 
-export default function Home({ data, userId, passcode }: Props) {
+export default function Home({ data, userId, passcode }: Props): JSX.Element {
   const { notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
 

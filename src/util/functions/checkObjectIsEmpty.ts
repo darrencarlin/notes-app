@@ -1,1 +1,2 @@
-export const checkIfObjectIsEmpty = (obj: any) => Object.keys(obj).length === 0;
+export const checkIfObjectIsEmpty = (obj: any): boolean =>
+  Object.keys(obj).length === 0;

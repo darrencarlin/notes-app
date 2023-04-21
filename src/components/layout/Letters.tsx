@@ -4,7 +4,7 @@ import { setLetter } from "@/store/state/noteApp";
 import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
-import { ReactNode } from "react-markdown/lib/ast-to-react";
+import type { ReactNode } from "react-markdown/lib/ast-to-react";
 
 const Letters: FC = () => {
   const { letters, currentLetter, notes } = useAppSelector((state) => state.noteApp);

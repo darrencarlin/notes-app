@@ -1,37 +1,52 @@
-import { Note, NoteApp } from "@/types";
+import type { Mode, Note, RootState } from "@/types";
 import { ALPHABET } from "@/util/constants";
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: RootState = {
+  userId: "",
+  passcode: "",
+  editMode: "view",
+  letters: ALPHABET,
+  notes: [],
+  currentLetter: "",
+  currentNote: {
+    id: "",
+    title: "",
+    body: "",
+    letter: "",
+  },
+  modalOpen: false,
+  menuOpen: false,
+};
 
 export const noteApp = createSlice({
   name: "noteApp",
-  initialState: {
-    userId: "",
-    passcode: "",
-    editMode: "view",
-    letters: ALPHABET,
-    notes: [] as Note[],
-    currentLetter: "",
-    currentNote: {} as Note,
-    modalOpen: false,
-    menuOpen: false,
-  } as NoteApp,
+  initialState,
   reducers: {
-    setEditMode: (state, action) => {
+    setEditMode: (state, action: PayloadAction<Mode>) => {
       state.editMode = action.payload;
     },
-    setLetter: (state, action) => {
+    setLetter: (state, action: PayloadAction<string>) => {
       state.currentLetter = action.payload;
       state.currentNote =
         current(state.notes).find((note) => note.letter === action.payload) ??
-        ({} as Note);
+        ({
+          id: "",
+          title: "",
+          body: "",
+          letter: "",
+        } as const);
       state.editMode = "view";
     },
-    setNote: (state, action) => {
+    setNote: (state, action: PayloadAction<Note>) => {
       state.currentNote = action.payload;
       state.editMode = "view";
       if (state.menuOpen) state.menuOpen = false;
     },
-    setData: (state, action) => {
+    setData: (
+      state,
+      action: PayloadAction<{ notes: Note[]; userId: string; passcode: string }>
+    ) => {
       const { notes, userId, passcode } = action.payload;
       state.notes = notes;
       state.currentLetter = notes.reduce((acc: string, note: Note) => {
@@ -41,12 +56,17 @@ export const noteApp = createSlice({
 
       state.currentNote =
         notes.find((note: Note) => note.letter === state.currentLetter) ??
-        ({} as Note);
+        ({
+          id: "",
+          title: "",
+          body: "",
+          letter: "",
+        } as const);
       state.userId = userId;
       state.passcode = passcode;
     },
 
-    editNote: (state, action) => {
+    editNote: (state, action: PayloadAction<Note>) => {
       const { id } = action.payload;
 
       const noteIndex = state.notes.findIndex((note) => note.id === id);
@@ -56,27 +76,37 @@ export const noteApp = createSlice({
         state.currentNote = { ...action.payload };
       }
     },
-    addNote: (state, action) => {
+    addNote: (state, action: PayloadAction<Note>) => {
       state.notes.push(action.payload);
       state.currentNote = { ...action.payload };
       state.currentLetter = action.payload.letter;
       state.editMode = "view";
     },
-    deleteNote: (state, action) => {
+    deleteNote: (state, action: PayloadAction<string>) => {
       const id = action.payload;
 
       const noteIndex = state.notes.findIndex((note) => note.id === id);
 
       if (noteIndex !== -1) {
         state.notes.splice(noteIndex, 1);
-        state.currentNote = {} as Note;
+        state.currentNote = {
+          id: "",
+          title: "",
+          body: "",
+          letter: "",
+        } as const;
       }
 
       state.editMode = "view";
       state.currentLetter = state.notes[0]?.letter ?? "";
       state.currentNote =
         state.notes.find((note) => note.letter === state.currentLetter) ??
-        ({} as Note);
+        ({
+          id: "",
+          title: "",
+          body: "",
+          letter: "",
+        } as const);
     },
     toggleModal: (state) => {
       state.modalOpen = !state.modalOpen;

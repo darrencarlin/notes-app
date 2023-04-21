@@ -4,9 +4,9 @@ export const callToast = (
   note: string,
   type: "warning" | "success",
   time: number = 5000
-) =>
+): void => {
   toast(note, {
-    type: type,
+    type,
     position: "bottom-right",
     autoClose: time,
     hideProgressBar: false,
@@ -19,3 +19,4 @@ export const callToast = (
       color: "#fff",
     },
   });
+};
