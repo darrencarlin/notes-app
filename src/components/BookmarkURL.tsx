@@ -5,7 +5,7 @@ const BookmarkURL = (): JSX.Element => {
   const { userId, passcode } = useAppSelector((state) => state.noteApp);
 
   return (
-    <div className="mb-4 flex">
+    <div className="mb-4 flex flex-wrap">
       <p className="mr-2">Your unique link: </p>
       <a
         href={`${BASE_URL}/?userId=${userId}&passcode=${passcode}`}

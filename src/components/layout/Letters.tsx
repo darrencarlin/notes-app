@@ -1,10 +1,9 @@
-import { type FC } from "react";
+import type { FC, ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setLetter } from "@/store/state/noteApp";
-import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
+import { checkStringsMatch } from "@/util/functions";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
-import type { ReactNode } from "react-markdown/lib/ast-to-react";
 
 const Letters: FC = () => {
   const { letters, currentLetter, notes } = useAppSelector((state) => state.noteApp);

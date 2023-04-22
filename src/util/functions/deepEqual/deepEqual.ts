@@ -1,4 +1,6 @@
 export const isDeepEqual = (object1: any, object2: any): boolean => {
+  if (!object1 || !object2) return false;
+
   const objKeys1 = Object.keys(object1);
   const objKeys2 = Object.keys(object2);
 

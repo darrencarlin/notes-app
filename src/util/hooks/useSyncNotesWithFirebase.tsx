@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BASE_URL, DEFAULT_HEADERS } from "../constants";
+import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import type { Note } from "@/types";
-import { callToast } from "../toast";
-import { isDeepEqual } from "../functions/deepEqual";
+import { callToast } from "@/util/toast";
+import { isDeepEqual } from "@/util/functions";
 
 interface Props {
   notes: Note[];

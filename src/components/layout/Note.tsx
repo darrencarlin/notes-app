@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
-import { checkIfObjectIsEmpty } from "@/util/functions/checkObjectIsEmpty";
+import { checkIfObjectIsEmpty } from "@/util/functions";
 import { callToast } from "@/util/toast";
 import { useState } from "react";
 import type { ChangeEvent, FC, ReactNode } from "react";

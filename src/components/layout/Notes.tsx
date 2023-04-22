@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteApp";
 import type { Note } from "@/types";
-import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
+import { checkStringsMatch } from "@/util/functions";
 import useWindowWidth from "@/util/hooks/useWindowWidth";
 import classNames from "classnames";
 import { useEffect, useState } from "react";

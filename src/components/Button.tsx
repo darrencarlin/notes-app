@@ -37,7 +37,6 @@ const Button: FC<Props> = ({
   ...props
 }) => {
   const hasIcon = !!icon;
-
   const textColor = colorMap[backgroundColor];
   const hoverColor = hoverColorMap[backgroundColor];
 
