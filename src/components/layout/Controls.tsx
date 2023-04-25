@@ -2,11 +2,16 @@ import type { FC, ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setEditMode, toggleModal } from "@/store/state/noteApp";
 import Button from "../Button";
-import { SlPlus, SlNote, SlTrash, SlEye } from "react-icons/sl";
-import useWindowWidth from "@/util/hooks/useWindowWidth";
+import { SlPlus, SlNote, SlTrash, SlEye, SlShare } from "react-icons/sl";
+import useWindowWidth from "@/hooks/useWindowWidth";
+import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
+import { BASE_URL } from "@/util/constants";
 
 const Controls: FC = () => {
-  const { editMode, notes } = useAppSelector((state) => state.noteApp);
+  const [isCopied, copyToClipboard] = useCopyToClipboard();
+  const { editMode, notes, userId, currentNote } = useAppSelector(
+    (state) => state.noteApp
+  );
   const dispatch = useAppDispatch();
   const width = useWindowWidth();
 
@@ -24,6 +29,17 @@ const Controls: FC = () => {
       )}
       {!noNotes && (
         <div className="flex gap-4">
+          {editMode === "view" && (
+            <Button
+              icon={width >= 425 ? <SlShare /> : null}
+              text={isCopied ? "Link Copied!" : "Share Note"}
+              backgroundColor="bg-orange-600"
+              onClick={() => {
+                const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;
+                copyToClipboard(shareLink);
+              }}
+            />
+          )}
           {editMode === "edit" ||
             (editMode === "view" && (
               <Button
@@ -39,7 +55,7 @@ const Controls: FC = () => {
               backgroundColor="bg-green-600"
               onClick={() => dispatch(setEditMode("edit"))}
               text="Edit Note"
-            ></Button>
+            />
           )}
 
           {editMode === "edit" && (

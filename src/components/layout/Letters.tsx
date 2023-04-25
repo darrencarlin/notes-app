@@ -2,7 +2,7 @@ import type { FC, ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setLetter } from "@/store/state/noteApp";
 import { checkStringsMatch } from "@/util/functions";
-import useWindowWidth from "@/util/hooks/useWindowWidth";
+import useWindowWidth from "@/hooks/useWindowWidth";
 import classNames from "classnames";
 
 const Letters: FC = () => {

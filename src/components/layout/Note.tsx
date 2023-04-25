@@ -14,10 +14,7 @@ import Input from "../inputs/Input";
 import TextArea from "../inputs/TextArea";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
-
-const Title: FC<{ title: string }> = ({ title }) => (
-  <h1 className="text-2xl font-bold mb-4">{title}</h1>
-);
+import NoteTitle from "./NoteTitle";
 
 const Note: FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
@@ -89,7 +86,7 @@ const Note: FC = () => {
   if (editMode === "new") {
     return (
       <NoteLayout>
-        <Title title="New Note" />
+        <NoteTitle title="New Note" />
         <HorizontalRule />
 
         <form className="flex flex-col items-end">
@@ -122,7 +119,7 @@ const Note: FC = () => {
       <NoteLayout>
         {editMode !== "edit" && (
           <>
-            <Title title={currentNote.title} />
+            <NoteTitle title={currentNote.title} />
             <HorizontalRule />
           </>
         )}

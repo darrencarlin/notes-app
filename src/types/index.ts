@@ -17,4 +17,5 @@ export interface RootState {
   currentNote: Note;
   modalOpen: boolean;
   menuOpen: boolean;
+  loading: boolean;
 }

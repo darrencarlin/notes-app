@@ -1,7 +1,7 @@
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import store from "@/store/state";
 import "@/styles/globals.scss";
-import useIsAppLoading from "@/util/hooks/useIsAppLoading";
+import useIsAppLoading from "@/hooks/useIsAppLoading";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";

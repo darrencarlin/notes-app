@@ -17,12 +17,16 @@ const initialState: RootState = {
   },
   modalOpen: false,
   menuOpen: false,
+  loading: false,
 };
 
 export const noteApp = createSlice({
   name: "noteApp",
   initialState,
   reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
     setEditMode: (state, action: PayloadAction<Mode>) => {
       state.editMode = action.payload;
     },
@@ -118,6 +122,7 @@ export const noteApp = createSlice({
 });
 
 export const {
+  setLoading,
   setEditMode,
   setLetter,
   setNote,
