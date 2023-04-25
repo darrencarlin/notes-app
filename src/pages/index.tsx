@@ -8,10 +8,10 @@ import { setData } from "@/store/state/noteApp";
 import { type Note as NoteType } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import { checkIfObjectIsEmpty, generateRandomString } from "@/util/functions";
+import useSyncNotesWithFirebase from "@/util/hooks/useSyncNotesWithFirebase";
+import axios from "axios";
 import type { GetServerSideProps } from "next";
 import { useEffect } from "react";
-import axios from "axios";
-import useSyncNotesWithFirebase from "@/util/hooks/useSyncNotesWithFirebase";
 
 interface Props {
   data: NoteType[];
