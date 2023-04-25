@@ -1,4 +1,4 @@
-import { isDeepEqual } from "./deepEqual";
+import { isDeepEqual } from "../../src/util/functions/deepEqual";
 
 describe("isDeepEqual function", () => {
   it("returns true for two empty objects", () => {

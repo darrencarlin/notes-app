@@ -1,7 +1,7 @@
-import { isDeepEqual } from "./deepEqual/deepEqual";
-import { checkIfObjectIsEmpty } from "./checkObjectIsEmpty/checkObjectIsEmpty";
-import { checkStringsMatch } from "./checkStringsMatch/checkStringsMatch";
-import { generateRandomString } from "./generateRandomString/generateRandomString";
+import { isDeepEqual } from "./deepEqual";
+import { checkIfObjectIsEmpty } from "./checkObjectIsEmpty";
+import { checkStringsMatch } from "./checkStringsMatch";
+import { generateRandomString } from "./generateRandomString";
 
 export {
   isDeepEqual,

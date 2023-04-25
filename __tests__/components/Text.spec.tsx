@@ -1,16 +1,16 @@
-import { render } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import Text from "@/components/Text";
 
 describe("Text component", () => {
   it("should render with default props", () => {
-    const { getByText } = render(<Text>Hello world!</Text>);
-    expect(getByText("Hello world!")).toBeInTheDocument();
-    expect(getByText("Hello world!")).toHaveClass("text-white");
+    render(<Text>Hello world!</Text>);
+    expect(screen.getByText("Hello world!")).toBeInTheDocument();
+    expect(screen.getByText("Hello world!")).toHaveClass("text-white");
   });
 
   it("should render with gray color", () => {
-    const { getByText } = render(<Text color="gray">Hello world!</Text>);
-    expect(getByText("Hello world!")).toBeInTheDocument();
-    expect(getByText("Hello world!")).toHaveClass("text-gray-700");
+    render(<Text color="gray">Hello world!</Text>);
+    expect(screen.getByText("Hello world!")).toBeInTheDocument();
+    expect(screen.getByText("Hello world!")).toHaveClass("text-gray-700");
   });
 });

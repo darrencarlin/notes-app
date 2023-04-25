@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import Screen from "@/components/layout/Screen";
 
 describe("Screen", () => {
@@ -12,12 +12,12 @@ describe("Screen", () => {
   });
 
   it("renders children", () => {
-    const { getByText } = render(
+    render(
       <Screen>
         <div>Hello World</div>
       </Screen>
     );
 
-    expect(getByText("Hello World")).toBeInTheDocument();
+    expect(screen.getByText("Hello World")).toBeInTheDocument();
   });
 });

@@ -1,4 +1,4 @@
-import { checkIfObjectIsEmpty } from "./checkObjectIsEmpty";
+import { checkIfObjectIsEmpty } from "../../src/util/functions/checkObjectIsEmpty";
 
 describe("checkIfObjectIsEmpty function", () => {
   it("returns true for an empty object", () => {
