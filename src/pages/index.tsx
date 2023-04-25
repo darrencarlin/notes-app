@@ -19,6 +19,8 @@ interface Props {
   passcode: string;
 }
 
+export const runtime = "edge";
+
 export default function Home({ data, userId, passcode }: Props): JSX.Element {
   const { notes } = useAppSelector((state) => state.noteApp);
   const dispatch = useAppDispatch();
