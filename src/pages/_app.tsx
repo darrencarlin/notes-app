@@ -1,7 +1,5 @@
-import LoadingScreen from "@/components/layout/LoadingScreen";
 import store from "@/store/state";
 import "@/styles/globals.scss";
-import useIsAppLoading from "@/hooks/useIsAppLoading";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -11,10 +9,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps): JSX.Element {
-  const loading = useIsAppLoading();
-
-  if (loading) return <LoadingScreen />;
-
   return (
     <Provider store={store}>
       <Component {...pageProps} />
