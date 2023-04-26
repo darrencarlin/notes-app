@@ -5,6 +5,7 @@ import type { Note } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
 import type { GetServerSideProps } from "next";
+import Head from "next/head";
 import React, { useState, useEffect, type FC } from "react";
 
 interface ShareLayoutProps {
@@ -13,9 +14,14 @@ interface ShareLayoutProps {
 
 const ShareLayout: FC<ShareLayoutProps> = ({ children }): JSX.Element => {
   return (
-    <div className="bg-gray-800 m-w-screen min-h-screen py-16">
-      <div className="max-w-5xl m-auto">{children}</div>
-    </div>
+    <>
+      <Head>
+        <title>Alpha Notes | Share</title>
+      </Head>
+      <div className="bg-gray-800 m-w-screen min-h-screen py-16">
+        <div className="max-w-5xl m-auto">{children}</div>
+      </div>
+    </>
   );
 };
 

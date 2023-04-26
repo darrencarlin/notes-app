@@ -14,6 +14,7 @@ import axios from "axios";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 
 interface Props {
   data: NoteType[];
@@ -64,14 +65,19 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
   if (loading) return <LoadingScreen />;
 
   return (
-    <Screen>
-      <Notes />
-      <section className="grid grid-rows-[50px_auto] bg-gray-800">
-        <Controls />
-        <Note />
-      </section>
-      <Letters />
-    </Screen>
+    <>
+      <Head>
+        <title>Alpha Notes</title>
+      </Head>
+      <Screen>
+        <Notes />
+        <section className="grid grid-rows-[50px_auto] bg-gray-800">
+          <Controls />
+          <Note />
+        </section>
+        <Letters />
+      </Screen>
+    </>
   );
 }
 
