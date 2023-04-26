@@ -1,3 +1,4 @@
+import SearchEngineOptimization from "@/components/SearchEngineOptimization";
 import store from "@/store/state";
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
@@ -11,6 +12,7 @@ export default function App({
 }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
+      <SearchEngineOptimization />
       <Component {...pageProps} />
       <ToastContainer />
     </Provider>

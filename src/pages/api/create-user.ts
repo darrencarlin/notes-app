@@ -1,6 +1,10 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint creates a new user account. It is called when a user lands on the site for the first time.
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

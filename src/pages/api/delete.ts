@@ -1,11 +1,15 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint deletes a single note from the database.
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const { id, userId } = req.body;
+  const { id, userId, passCode } = req.body;
 
   // validate input
   if (!id || !userId) {
@@ -20,13 +24,21 @@ export default async function handler(
       .doc(id)
       .get();
     if (!docRef.exists) {
-      return res
-        .status(404)
-        .json({ message: "Note not found, please try again in 30 seconds" });
+      return res.status(404).json({
+        message:
+          "Note not found, please try again in 30 seconds giving time for the note to sync with the database",
+      });
     }
 
-    await db.collection("users").doc(userId).collection("notes").doc(id).delete();
-    res.status(200).json({ message: "Note Deleted 🗑️" });
+    const user = docRef.data();
+
+    const passcodeMatch = user?.passcode === passCode;
+
+    if (passcodeMatch) {
+      await db.collection("users").doc(userId).collection("notes").doc(id).delete();
+      res.status(200).json({ message: "Note Deleted 🗑️" });
+    }
+    return res.status(401).json({ message: "Invalid passcode" });
   } catch (error) {
     console.error(error);
     return res

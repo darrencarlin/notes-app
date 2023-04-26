@@ -14,8 +14,11 @@ interface Props {
 function useSyncNotesWithFirebase({ notes, userId, passcode }: Props): void {
   const [previousNotes, setPreviousNotes] = useState<Note[]>(notes);
   useEffect(() => {
-    const syncNotesWithFirebase = async (): Promise<void> => {
-      await axios.post(
+    const syncNotesWithFirebase = async (): Promise<{
+      status: number;
+      message: string;
+    }> => {
+      const response = await axios.post(
         BASE_URL + "/api/sync",
         {
           notes,
@@ -24,15 +27,31 @@ function useSyncNotesWithFirebase({ notes, userId, passcode }: Props): void {
         },
         DEFAULT_HEADERS
       );
+
+      return {
+        status: response.status,
+        message: response.data.message,
+      };
     };
 
     const interval = setInterval(async () => {
       const hasNewNotes = notes.length > previousNotes.length;
       const hasChanged = !isDeepEqual(notes, previousNotes);
       if (hasNewNotes || hasChanged) {
-        await syncNotesWithFirebase();
-        setPreviousNotes(notes);
-        callToast("Notes synced...", "success", 2000);
+        const { status, message } = await syncNotesWithFirebase();
+
+        switch (status) {
+          case 200:
+            setPreviousNotes(notes);
+            callToast(message, "success", 2000);
+            break;
+          case 401:
+            callToast(message, "warning", 2000);
+            break;
+          default:
+            callToast(message, "error", 2000);
+            break;
+        }
       }
     }, 30000);
 

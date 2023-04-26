@@ -1,6 +1,10 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint retrieves a single note from the database for sharing purposes.
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

@@ -1,6 +1,10 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint syncs a users notes with the database. It runs every 30 seconds.
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -20,11 +24,16 @@ export default async function handler(
     if (userDoc.exists) {
       const userData = userDoc.data();
 
+      const passcodeMatch = userData?.passcode === passcode;
       // if user exists, check if passcode matches
-      if (userData?.passcode === passcode) {
+      if (passcodeMatch) {
         for (const note of notes) {
           await notesRef.doc(note.id).set(note, { merge: true });
         }
+      } else {
+        return res
+          .status(401)
+          .json({ message: "Not Authenticated to perform that action" });
       }
     }
 

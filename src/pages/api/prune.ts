@@ -1,6 +1,10 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint is a cron job that prunes accounts that have no notes. It runs every 24 hours.
+ */
+
 export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse

@@ -1,6 +1,10 @@
 import { db } from "@/util/firebase/admin";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/**
+ * This endpoint retrieves all notes from the database for a user.
+ */
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -29,10 +33,14 @@ export default async function handler(
         .doc(userId)
         .collection("notes")
         .get();
+
+      if (notes.empty) {
+        return res.status(404).json({ code: 200, message: "No notes found" });
+      }
+
       return res.status(200).json(notes.docs.map((doc) => doc.data()));
-    } else {
-      return res.status(401).json({ message: "Unauthorized" });
     }
+    return res.status(401).json({ message: "Unauthorized" });
   } catch (error) {
     // log error
     console.error(error);

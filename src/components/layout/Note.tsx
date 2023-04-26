@@ -20,7 +20,9 @@ import NoteTitle from "./NoteTitle";
 const Note: FC = () => {
   const [newNoteTitle, setNewNoteTitle] = useState<string>("");
   const [newNoteBody, setNewNoteBody] = useState<string>("");
-  const { currentNote, editMode, userId } = useAppSelector((state) => state.noteApp);
+  const { currentNote, editMode, userId, passcode } = useAppSelector(
+    (state) => state.noteApp
+  );
   const dispatch = useAppDispatch();
 
   const saveNote = (): void => {
@@ -54,6 +56,7 @@ const Note: FC = () => {
       BASE_URL + "/api/delete",
       {
         userId,
+        passcode,
         id,
       },
       DEFAULT_HEADERS
