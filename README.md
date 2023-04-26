@@ -9,4 +9,5 @@ This app is a simple notes app that allows you to create, edit, delete and share
 - Notes are stored alphabetically by title.
 - Notes can be shared with others for viewing (no editing).
 
-![screen (2)](https://user-images.githubusercontent.com/30006190/232582071-664f725e-53b3-48c9-b4bf-7eaffe8b59d9.png)
+![alpha-notes vercel app__userId=msrZUDKqKB9sBMvIWms1 passcode=X37Z3zurSU](https://user-images.githubusercontent.com/30006190/234676237-3d97280f-c334-4d03-b888-356c93663dcd.png)
+
