@@ -31,55 +31,54 @@ const Controls: FC = () => {
 
   return (
     <ControlsLayout>
-      {!isInDefaultView && (
-        <>
-          {canCreateNote && (
-            <Button
-              icon={<SlPlus />}
-              text="New"
-              backgroundColor="bg-blue-600"
-              onClick={() => dispatch(setEditMode(Mode.NEW_MODE))}
-            />
-          )}
-          {hasNotes && (
-            <div className="flex gap-4">
-              {isViewingNote && (
-                <Button
-                  icon={<SlShare />}
-                  text={isCopied ? "Copied" : "Share"}
-                  backgroundColor="bg-orange-600"
-                  onClick={() => handleShareNote()}
-                />
-              )}
-              {canDeleteNote && (
-                <Button
-                  icon={<SlTrash />}
-                  text="Delete"
-                  backgroundColor="bg-red-600"
-                  onClick={() => dispatch(toggleModal())}
-                />
-              )}
-              {canEditNote && (
-                <Button
-                  icon={<SlNote />}
-                  text="Edit"
-                  backgroundColor="bg-green-600"
-                  onClick={() => dispatch(setEditMode(Mode.EDIT_MODE))}
-                />
-              )}
+      <>
+        {canCreateNote && (
+          <Button
+            icon={<SlPlus />}
+            text="New"
+            backgroundColor="bg-blue-600"
+            onClick={() => dispatch(setEditMode(Mode.NEW_MODE))}
+          />
+        )}
 
-              {canViewNote && (
-                <Button
-                  icon={<SlEye />}
-                  text="View"
-                  backgroundColor="bg-blue-600"
-                  onClick={() => dispatch(setEditMode(Mode.VIEW_MODE))}
-                />
-              )}
-            </div>
-          )}
-        </>
-      )}
+        {hasNotes && !isInDefaultView && (
+          <div className="flex gap-4">
+            {isViewingNote && (
+              <Button
+                icon={<SlShare />}
+                text={isCopied ? "Copied" : "Share"}
+                backgroundColor="bg-orange-600"
+                onClick={() => handleShareNote()}
+              />
+            )}
+            {canDeleteNote && (
+              <Button
+                icon={<SlTrash />}
+                text="Delete"
+                backgroundColor="bg-red-600"
+                onClick={() => dispatch(toggleModal())}
+              />
+            )}
+            {canEditNote && (
+              <Button
+                icon={<SlNote />}
+                text="Edit"
+                backgroundColor="bg-green-600"
+                onClick={() => dispatch(setEditMode(Mode.EDIT_MODE))}
+              />
+            )}
+
+            {canViewNote && (
+              <Button
+                icon={<SlEye />}
+                text="View"
+                backgroundColor="bg-blue-600"
+                onClick={() => dispatch(setEditMode(Mode.VIEW_MODE))}
+              />
+            )}
+          </div>
+        )}
+      </>
     </ControlsLayout>
   );
 };

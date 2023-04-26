@@ -3,6 +3,7 @@ export interface Note {
   title: string;
   body: string;
   letter: string;
+  lastUpdated: string;
 }
 
 export const enum Mode {

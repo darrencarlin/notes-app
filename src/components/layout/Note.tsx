@@ -29,6 +29,7 @@ const Note: FC = () => {
       title: newNoteTitle,
       body: newNoteBody,
       letter: newNoteTitle[0].toLowerCase(),
+      lastUpdated: new Date().toISOString(),
     };
     dispatch(addNote(note));
     setNewNoteTitle("");
@@ -42,6 +43,7 @@ const Note: FC = () => {
   ): void => {
     const updatedNote = {
       ...currentNote,
+      lastUpdated: new Date().toISOString(),
       [field]: e.target.value,
     };
     dispatch(editNote(updatedNote));

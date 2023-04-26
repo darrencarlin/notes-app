@@ -15,6 +15,7 @@ const initialState: RootState = {
     title: "",
     body: "",
     letter: "",
+    lastUpdated: "",
   },
   modalOpen: false,
   menuOpen: false,
@@ -40,6 +41,7 @@ export const noteApp = createSlice({
           title: "",
           body: "",
           letter: "",
+          lastUpdated: "",
         } as const);
       state.editMode = Mode.VIEW_MODE;
     },
@@ -67,6 +69,7 @@ export const noteApp = createSlice({
           title: "",
           body: "",
           letter: "",
+          lastUpdated: "",
         } as const);
       state.userId = userId;
       state.passcode = passcode;
@@ -100,6 +103,7 @@ export const noteApp = createSlice({
           title: "",
           body: "",
           letter: "",
+          lastUpdated: "",
         } as const;
       }
 
@@ -112,6 +116,7 @@ export const noteApp = createSlice({
           title: "",
           body: "",
           letter: "",
+          lastUpdated: "",
         } as const);
     },
     toggleModal: (state) => {
