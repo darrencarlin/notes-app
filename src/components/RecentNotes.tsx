@@ -23,13 +23,15 @@ const RecentNotes = (): JSX.Element => {
       return dateB.getTime() - dateA.getTime();
     });
 
+  if (recentNotes.length === 0) return <></>;
+
   return (
     <>
       <Title title="You recent notes" />
-      <div className="flex flex-col items-start">
+      <ul className="flex flex-col items-start">
         {recentNotes.slice(0, 10).map((note) => {
           return (
-            <div key={note.id} className="flex items-center gap-4">
+            <li key={note.id} className="flex items-center gap-4">
               <button
                 type="button"
                 onClick={() => dispatch(setNote(note))}
@@ -40,10 +42,10 @@ const RecentNotes = (): JSX.Element => {
               <span className="text-gray-500 text-sm">
                 last edited {formatRelative(new Date(note.lastUpdated), new Date())}
               </span>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </>
   );
 };

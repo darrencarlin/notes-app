@@ -60,7 +60,7 @@ const Notes: FC = () => {
       <NotesLayout>
         {hasNotes && (
           <button className="z-10" onClick={() => dispatch(toggleMenu())}>
-            {menuOpen ? "Close" : "Open"}
+            {menuOpen ? "Close" : "Menu"}
           </button>
         )}
 

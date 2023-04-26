@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ): Promise<void> {
   const { userId, passcode } = req.body;
-
+  console.log({ userId, passcode });
   // validate input
   if (!userId || !passcode) {
     return res.status(400).json({ message: "Invalid input" });
@@ -19,10 +19,6 @@ export default async function handler(
   try {
     // Get the user from the database and check if the passcode matches
     const user = await db.collection("users").doc(userId).get();
-
-    if (!user.exists) {
-      return res.status(200).json({ code: 404, message: "User not found" });
-    }
 
     const passcodeMatch = user.data()?.passcode === passcode;
 
@@ -33,10 +29,6 @@ export default async function handler(
         .doc(userId)
         .collection("notes")
         .get();
-
-      if (notes.empty) {
-        return res.status(404).json({ code: 200, message: "No notes found" });
-      }
 
       return res.status(200).json(notes.docs.map((doc) => doc.data()));
     }

@@ -45,12 +45,7 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
         DEFAULT_HEADERS
       );
 
-      const status = response.status;
       const { data } = response;
-
-      if (status === 404) {
-        void router.push("/404");
-      }
 
       dispatch(setData({ notes: data, userId, passcode }));
       setTimeout(() => {

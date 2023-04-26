@@ -19,7 +19,7 @@ const languages = [
 ];
 
 const LanguageList = (): JSX.Element => (
-  <ul className="flex gap-2">
+  <ul className="flex flex-wrap gap-2">
     {languages.map((language) => (
       <li className="mb-2" key={language}>
         <code className="bg-gray-500 rounded p-1">{language}</code>
@@ -48,8 +48,8 @@ const NoNotesFound = (): JSX.Element => {
 
       <Text>
         It&apos;s important to note (no pun intended) that this website is intended
-        for self-learning and reference purposes only. For your security, please
-        avoid storing any sensitive information within your notes.
+        for self-learning and reference purposes only. Please avoid storing any
+        sensitive information within your notes.
       </Text>
 
       <Text>

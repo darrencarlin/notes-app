@@ -8,7 +8,7 @@ export default function Custom404(): JSX.Element {
         <h1 className="text-2xl mb-4">404 - Page Not Found</h1>
         <Text>
           Your account may have been removed, this typically happens if you do not
-          add any notes.
+          add any notes and 24 hours has passed.
         </Text>
 
         <Text>
