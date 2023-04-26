@@ -5,7 +5,11 @@ export interface Note {
   letter: string;
 }
 
-export type Mode = "edit" | "view" | "new";
+export const enum Mode {
+  NEW_MODE = "new",
+  VIEW_MODE = "view",
+  EDIT_MODE = "edit",
+}
 
 export interface RootState {
   userId: string;

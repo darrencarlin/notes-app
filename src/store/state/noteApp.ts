@@ -1,11 +1,12 @@
-import type { Mode, Note, RootState } from "@/types";
+import type { Note, RootState } from "@/types";
+import { Mode } from "@/types";
 import { ALPHABET } from "@/util/constants";
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: RootState = {
   userId: "",
   passcode: "",
-  editMode: "view",
+  editMode: Mode.VIEW_MODE,
   letters: ALPHABET,
   notes: [],
   currentLetter: "",
@@ -40,11 +41,11 @@ export const noteApp = createSlice({
           body: "",
           letter: "",
         } as const);
-      state.editMode = "view";
+      state.editMode = Mode.VIEW_MODE;
     },
     setNote: (state, action: PayloadAction<Note>) => {
       state.currentNote = action.payload;
-      state.editMode = "view";
+      state.editMode = Mode.VIEW_MODE;
       if (state.menuOpen) state.menuOpen = false;
     },
     setData: (
@@ -53,11 +54,12 @@ export const noteApp = createSlice({
     ) => {
       const { notes, userId, passcode } = action.payload;
       state.notes = notes;
-      state.currentLetter = notes.reduce((acc: string, note: Note) => {
-        if (note.letter < acc) return note.letter;
-        return acc;
-      }, "z");
+      // state.currentLetter = notes.reduce((acc: string, note: Note) => {
+      //   if (note.letter < acc) return note.letter;
+      //   return acc;
+      // }, "z");
 
+      state.currentLetter = "";
       state.currentNote =
         notes.find((note: Note) => note.letter === state.currentLetter) ??
         ({
@@ -84,7 +86,7 @@ export const noteApp = createSlice({
       state.notes.push(action.payload);
       state.currentNote = { ...action.payload };
       state.currentLetter = action.payload.letter;
-      state.editMode = "view";
+      state.editMode = Mode.VIEW_MODE;
     },
     deleteNote: (state, action: PayloadAction<string>) => {
       const id = action.payload;
@@ -101,7 +103,7 @@ export const noteApp = createSlice({
         } as const;
       }
 
-      state.editMode = "view";
+      state.editMode = Mode.VIEW_MODE;
       state.currentLetter = state.notes[0]?.letter ?? "";
       state.currentNote =
         state.notes.find((note) => note.letter === state.currentLetter) ??

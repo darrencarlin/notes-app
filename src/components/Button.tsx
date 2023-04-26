@@ -49,7 +49,7 @@ const Button: FC<Props> = ({
       "flex items-center gap-2": hasIcon,
       "w-full": fullWidth,
     },
-    `${backgroundColor} ${textColor} p-1 py-1 sm:px-2 font-medium text-sm tracking-wider rounded ${hoverColor} hover:shadow-md transition-all duration-100 ease-in-out`
+    `${backgroundColor} ${textColor} p-2 md:py-1 md:px-2  font-medium text-sm tracking-wider rounded ${hoverColor} hover:shadow-md transition-all duration-100 ease-in-out`
   );
 
   return (

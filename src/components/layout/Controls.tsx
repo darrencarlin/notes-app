@@ -3,68 +3,74 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setEditMode, toggleModal } from "@/store/state/noteApp";
 import Button from "../Button";
 import { SlPlus, SlNote, SlTrash, SlEye, SlShare } from "react-icons/sl";
-import useWindowWidth from "@/hooks/useWindowWidth";
 import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
 import { BASE_URL } from "@/util/constants";
+import { Mode } from "@/types";
 
 const Controls: FC = () => {
   const [isCopied, copyToClipboard] = useCopyToClipboard();
   const { editMode, notes, userId, currentNote } = useAppSelector(
     (state) => state.noteApp
   );
-  const dispatch = useAppDispatch();
-  const width = useWindowWidth();
 
-  const noNotes = !notes.length;
+  const dispatch = useAppDispatch();
+
+  const hasNotes = notes.length > 0;
+  const isViewingNote = editMode === Mode.VIEW_MODE;
+  const canCreateNote = editMode !== Mode.NEW_MODE;
+  const canEditNote = editMode === Mode.VIEW_MODE;
+  const canViewNote = editMode === Mode.EDIT_MODE;
+  const canDeleteNote = [Mode.VIEW_MODE, Mode.EDIT_MODE].includes(editMode);
+
+  const handleShareNote = (): void => {
+    const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;
+    copyToClipboard(shareLink);
+  };
 
   return (
     <ControlsLayout>
-      {editMode !== "new" && (
+      {canCreateNote && (
         <Button
-          icon={width >= 425 ? <SlPlus /> : null}
-          text="New Note"
+          icon={<SlPlus />}
+          text="New"
           backgroundColor="bg-blue-600"
-          onClick={() => dispatch(setEditMode("new"))}
+          onClick={() => dispatch(setEditMode(Mode.NEW_MODE))}
         />
       )}
-      {!noNotes && (
+      {hasNotes && (
         <div className="flex gap-4">
-          {editMode === "view" && (
+          {isViewingNote && (
             <Button
-              icon={width >= 425 ? <SlShare /> : null}
-              text={isCopied ? "Link Copied!" : "Share Note"}
+              icon={<SlShare />}
+              text={isCopied ? "Copied" : "Share"}
               backgroundColor="bg-orange-600"
-              onClick={() => {
-                const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;
-                copyToClipboard(shareLink);
-              }}
+              onClick={() => handleShareNote()}
             />
           )}
-          {editMode === "edit" ||
-            (editMode === "view" && (
-              <Button
-                icon={width >= 425 ? <SlTrash /> : null}
-                backgroundColor="bg-red-600"
-                text="Delete Note"
-                onClick={() => dispatch(toggleModal())}
-              />
-            ))}
-          {editMode === "view" && (
+          {canDeleteNote && (
             <Button
-              icon={width >= 425 ? <SlNote /> : null}
+              icon={<SlTrash />}
+              text="Delete"
+              backgroundColor="bg-red-600"
+              onClick={() => dispatch(toggleModal())}
+            />
+          )}
+          {canEditNote && (
+            <Button
+              icon={<SlNote />}
+              text="Edit"
               backgroundColor="bg-green-600"
-              onClick={() => dispatch(setEditMode("edit"))}
-              text="Edit Note"
+              onClick={() => dispatch(setEditMode(Mode.EDIT_MODE))}
             />
           )}
 
-          {editMode === "edit" && (
+          {canViewNote && (
             <Button
-              icon={width >= 425 ? <SlEye /> : null}
+              icon={<SlEye />}
+              text="View"
               backgroundColor="bg-blue-600"
-              onClick={() => dispatch(setEditMode("view"))}
-              text="View Note"
-            ></Button>
+              onClick={() => dispatch(setEditMode(Mode.VIEW_MODE))}
+            />
           )}
         </div>
       )}

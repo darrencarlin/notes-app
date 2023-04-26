@@ -13,6 +13,7 @@ import NoNotesFound from "../NoNotesFound";
 import Input from "../inputs/Input";
 import TextArea from "../inputs/TextArea";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
+import { Mode } from "@/types";
 import axios from "axios";
 import NoteTitle from "./NoteTitle";
 
@@ -35,22 +36,13 @@ const Note: FC = () => {
     callToast("Note created ✏️", "success");
   };
 
-  const updateNote = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+  const updateNote = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    field: string
+  ): void => {
     const updatedNote = {
-      id: currentNote.id,
-      title: currentNote.title,
-      body: e.target.value,
-      letter: currentNote.letter,
-    };
-    dispatch(editNote(updatedNote));
-  };
-
-  const updateTitle = (e: ChangeEvent<HTMLInputElement>): void => {
-    const updatedNote = {
-      id: currentNote.id,
-      title: e.target.value,
-      body: currentNote.body,
-      letter: currentNote.letter,
+      ...currentNote,
+      [field]: e.target.value,
     };
     dispatch(editNote(updatedNote));
   };
@@ -80,10 +72,10 @@ const Note: FC = () => {
     }
   };
 
-  if (checkIfObjectIsEmpty(currentNote) && editMode !== "new")
+  if (checkIfObjectIsEmpty(currentNote) && editMode !== Mode.NEW_MODE)
     return <NoNotesFound />;
 
-  if (editMode === "new") {
+  if (editMode === Mode.NEW_MODE) {
     return (
       <NoteLayout>
         <NoteTitle title="New Note" />
@@ -91,6 +83,7 @@ const Note: FC = () => {
 
         <form className="flex flex-col items-end">
           <Input
+            label="Title"
             value={newNoteTitle}
             placeholder="Title"
             type="text"
@@ -98,6 +91,7 @@ const Note: FC = () => {
           />
 
           <TextArea
+            label="Body"
             placeholder="Body"
             value={newNoteBody}
             height
@@ -117,21 +111,23 @@ const Note: FC = () => {
   return (
     <>
       <NoteLayout>
-        {editMode !== "edit" && (
+        {editMode !== Mode.EDIT_MODE && (
           <>
             <NoteTitle title={currentNote.title} />
             <HorizontalRule />
           </>
         )}
-        {editMode === "edit" ? (
+        {editMode === Mode.EDIT_MODE ? (
           <form className="grid grid-rows-[56px_1fr] h-full">
             <Input
+              label="Title"
               defaultValue={currentNote.title}
-              onChange={(e) => updateTitle(e)}
+              onChange={(e) => updateNote(e, "title")}
             />
             <TextArea
+              label="Body"
               defaultValue={currentNote.body}
-              onChange={(e) => updateNote(e)}
+              onChange={(e) => updateNote(e, "body")}
             />
           </form>
         ) : (

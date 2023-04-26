@@ -68,7 +68,7 @@ const Notes: FC = () => {
 
         <div className={classnames}>
           <div className="w-full">
-            <SearchInput handleSearch={handleSearch} />
+            <SearchInput label="Search" handleSearch={handleSearch} />
             <Title title={currentLetter} />
             <div className="flex flex-col items-start">
               {filteredNotes.map((n) => {
@@ -105,7 +105,7 @@ const Notes: FC = () => {
   return (
     <NotesLayout>
       <div className="w-full">
-        <SearchInput handleSearch={handleSearch} />
+        <SearchInput label="Search" handleSearch={handleSearch} />
         <Title title={currentLetter} />
         {hasFilteredNotes ? (
           <div className="flex flex-col items-start">
@@ -131,7 +131,7 @@ const Notes: FC = () => {
             })}
           </div>
         ) : (
-          <p className="text-gray-500">No notes found</p>
+          <p className="text-gray-500">No letter selected</p>
         )}
       </div>
       <BookmarkURL />
