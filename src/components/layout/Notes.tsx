@@ -1,17 +1,14 @@
+import useWindowWidth from "@/hooks/useWindowWidth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteApp";
 import type { Note } from "@/types";
-import { checkStringsMatch } from "@/util/functions";
-import useWindowWidth from "@/hooks/useWindowWidth";
+import { checkIfObjectIsEmpty, checkStringsMatch } from "@/util/functions";
 import classNames from "classnames";
+import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
-import type { ReactNode, FC } from "react";
 import BookmarkURL from "../BookmarkURL";
+import Title from "../Title";
 import SearchInput from "../inputs/SearchInput";
-
-const Title: FC<{ title: string }> = ({ title }) => (
-  <h3 className="font-bold mb-4 uppercase">{title}</h3>
-);
 
 const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
@@ -46,6 +43,7 @@ const Notes: FC = () => {
 
   const hasNotes = notes.length > 0;
   const hasFilteredNotes = filteredNotes.length > 0;
+  const hasNoteSelected = !checkIfObjectIsEmpty(currentNote);
 
   if (width < 1024) {
     const classnames = classNames(
@@ -68,7 +66,9 @@ const Notes: FC = () => {
 
         <div className={classnames}>
           <div className="w-full">
-            <SearchInput label="Search" handleSearch={handleSearch} />
+            {hasNoteSelected && (
+              <SearchInput label="Search" handleSearch={handleSearch} />
+            )}
             <Title title={currentLetter} />
             <div className="flex flex-col items-start">
               {filteredNotes.map((n) => {
@@ -105,7 +105,9 @@ const Notes: FC = () => {
   return (
     <NotesLayout>
       <div className="w-full">
-        <SearchInput label="Search" handleSearch={handleSearch} />
+        {hasNoteSelected && (
+          <SearchInput label="Search" handleSearch={handleSearch} />
+        )}
         <Title title={currentLetter} />
         {hasFilteredNotes ? (
           <div className="flex flex-col items-start">

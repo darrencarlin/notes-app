@@ -1,6 +1,8 @@
 import { useAppSelector } from "@/store/hooks/redux";
 import { BASE_URL } from "@/util/constants";
 import Text from "./Text";
+import RecentNotes from "./RecentNotes";
+import HorizontalRule from "./HorizontalRule";
 
 const languages = [
   "tsx",
@@ -63,6 +65,8 @@ const NoNotesFound = (): JSX.Element => {
         and syntax highlighting for the following languages/file types:
       </Text>
       <LanguageList />
+      <HorizontalRule />
+      <RecentNotes />
     </div>
   );
 };

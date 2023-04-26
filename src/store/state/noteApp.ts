@@ -48,6 +48,7 @@ export const noteApp = createSlice({
     setNote: (state, action: PayloadAction<Note>) => {
       state.currentNote = action.payload;
       state.editMode = Mode.VIEW_MODE;
+      state.currentLetter = action.payload.letter;
       if (state.menuOpen) state.menuOpen = false;
     },
     setData: (
