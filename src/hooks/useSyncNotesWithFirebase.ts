@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import type { Note } from "@/types";
 import { callToast } from "@/util/toast";
-import { isDeepEqual } from "@/util/functions";
+import { isEqual } from "underscore";
 
 interface Props {
   notes: Note[];
   userId: string;
   passcode: string;
 }
+
+/**
+ * useSyncNotesWithFirebase hook.
+ * Syncs notes with Firebase every 30 seconds.
+ */
 
 function useSyncNotesWithFirebase({ notes, userId, passcode }: Props): void {
   const [previousNotes, setPreviousNotes] = useState<Note[]>(notes);
@@ -36,7 +41,7 @@ function useSyncNotesWithFirebase({ notes, userId, passcode }: Props): void {
 
     const interval = setInterval(async () => {
       const hasNewNotes = notes.length > previousNotes.length;
-      const hasChanged = !isDeepEqual(notes, previousNotes);
+      const hasChanged = !isEqual(notes, previousNotes);
       if (hasNewNotes || hasChanged) {
         const { status, message } = await syncNotesWithFirebase();
 

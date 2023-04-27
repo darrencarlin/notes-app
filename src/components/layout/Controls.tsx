@@ -6,7 +6,6 @@ import { SlPlus, SlNote, SlTrash, SlEye, SlShare } from "react-icons/sl";
 import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
 import { BASE_URL } from "@/util/constants";
 import { Mode } from "@/types";
-import { checkIfObjectIsEmpty } from "@/util/functions";
 
 const Controls: FC = () => {
   const [isCopied, copyToClipboard] = useCopyToClipboard();
@@ -22,7 +21,9 @@ const Controls: FC = () => {
   const canEditNote = editMode === Mode.VIEW_MODE;
   const canViewNote = editMode === Mode.EDIT_MODE;
   const canDeleteNote = [Mode.VIEW_MODE, Mode.EDIT_MODE].includes(editMode);
-  const isInDefaultView = checkIfObjectIsEmpty(currentNote);
+  const isInDefaultView = currentNote.id === "";
+
+  console.log({ isInDefaultView });
 
   const handleShareNote = (): void => {
     const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;

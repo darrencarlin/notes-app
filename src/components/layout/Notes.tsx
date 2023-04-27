@@ -2,7 +2,7 @@ import useWindowWidth from "@/hooks/useWindowWidth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteApp";
 import type { Note } from "@/types";
-import { checkIfObjectIsEmpty, checkStringsMatch } from "@/util/functions";
+import { checkStringsMatch } from "@/util/functions";
 import classNames from "classnames";
 import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ const Notes: FC = () => {
 
   const hasNotes = notes.length > 0;
   const hasFilteredNotes = filteredNotes.length > 0;
-  const hasNoteSelected = !checkIfObjectIsEmpty(currentNote);
+  const hasNoteSelected = currentNote.id !== "";
 
   if (width < 1024) {
     const classnames = classNames(

@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { addNote, deleteNote, editNote } from "@/store/state/noteApp";
-import { checkIfObjectIsEmpty } from "@/util/functions";
 import { callToast } from "@/util/toast";
 import { useState } from "react";
 import type { ChangeEvent, FC, ReactNode } from "react";
@@ -77,8 +76,7 @@ const Note: FC = () => {
     }
   };
 
-  if (checkIfObjectIsEmpty(currentNote) && editMode !== Mode.NEW_MODE)
-    return <NoNotesFound />;
+  if (currentNote.id === "" && editMode !== Mode.NEW_MODE) return <NoNotesFound />;
 
   if (editMode === Mode.NEW_MODE) {
     return (

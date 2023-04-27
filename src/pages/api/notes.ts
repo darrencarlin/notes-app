@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ): Promise<void> {
   const { userId, passcode } = req.body;
-  console.log({ userId, passcode });
+
   // validate input
   if (!userId || !passcode) {
     return res.status(400).json({ message: "Invalid input" });

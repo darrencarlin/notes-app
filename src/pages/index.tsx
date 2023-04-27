@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setData, setLoading } from "@/store/state/noteApp";
 import { type Note as NoteType } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
-import { checkIfObjectIsEmpty, generateRandomString } from "@/util/functions";
+import { generateRandomString } from "@/util/functions";
 import axios from "axios";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -71,8 +71,10 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { userId, passcode } = context.query;
+
   // if new user (no query params in URL)
-  if (checkIfObjectIsEmpty(context.query)) {
+  if (!userId || !passcode) {
     const userId = generateRandomString(20);
     const passcode = generateRandomString(10);
 
@@ -95,8 +97,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   // if existing user (query params in URL)
-  const userId = context.query.userId as string;
-  const passcode = context.query.passcode as string;
 
   return {
     props: {

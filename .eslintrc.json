@@ -6,8 +6,11 @@
     "node": true
   },
   "extends": [
+    "eslint:recommended",
     "next/core-web-vitals",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
     "standard-with-typescript",
     "next",
     "prettier"
@@ -19,15 +22,25 @@
       "extends": ["plugin:testing-library/react"]
     }
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
-  "plugins": ["react", "testing-library"],
+  "plugins": ["react", "react-hooks", "testing-library"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/no-confusing-void-expression": "off"
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "logical-assignment-operators": ["error", "always"]
   }
 }

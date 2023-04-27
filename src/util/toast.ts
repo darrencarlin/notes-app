@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 export const callToast = (
   note: string,
   type: "warning" | "success" | "error",
-  time: number = 5000
+  time = 5000
 ): void => {
   toast(note, {
     type,

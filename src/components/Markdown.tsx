@@ -9,10 +9,10 @@ import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javasc
 import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
 import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
-import shell from "react-syntax-highlighter/dist/cjs/languages/prism/shell-session";
 import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import python from "react-syntax-highlighter/dist/cjs/languages/prism/python";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { type Props } from "@/types";
 
 SyntaxHighlighter.registerLanguage("jsx", jsx);
 SyntaxHighlighter.registerLanguage("tsx", tsx);
@@ -24,7 +24,6 @@ SyntaxHighlighter.registerLanguage("css", css);
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 SyntaxHighlighter.registerLanguage("json", json);
 SyntaxHighlighter.registerLanguage("python", python);
-SyntaxHighlighter.registerLanguage("shell", shell);
 
 interface MarkdownProps {
   markdown: string & { content?: string };
@@ -34,17 +33,21 @@ const Markdown: FC<MarkdownProps> = ({ markdown }) => {
   const syntaxTheme = oneDark;
 
   const MarkdownComponents = {
-    code({ className, ...props }: any) {
-      const hasLang = /language-(\w+)/.exec(className);
-
-      const { inline, ...restProps } = props;
-
-      return hasLang ? (
-        <SyntaxHighlighter style={syntaxTheme} language={hasLang[1]}>
-          {props.children}
+    code({ inline, className, children, ...props }: Props) {
+      const match = /language-(\w+)/.exec(className ?? "");
+      return !inline && match ? (
+        <SyntaxHighlighter
+          style={syntaxTheme}
+          language={match[1]}
+          PreTag="div"
+          {...props}
+        >
+          {String(children).replace(/\n$/, "")}
         </SyntaxHighlighter>
       ) : (
-        <code className={className} {...restProps} inline={String(inline)} />
+        <code className={className} {...props}>
+          {children}
+        </code>
       );
     },
   };
