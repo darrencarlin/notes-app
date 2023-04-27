@@ -23,8 +23,6 @@ const Controls: FC = () => {
   const canDeleteNote = [Mode.VIEW_MODE, Mode.EDIT_MODE].includes(editMode);
   const isInDefaultView = currentNote.id === "";
 
-  console.log({ isInDefaultView });
-
   const handleShareNote = (): void => {
     const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;
     copyToClipboard(shareLink);
