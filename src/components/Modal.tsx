@@ -2,8 +2,8 @@ import type { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { toggleModal } from "@/store/state/noteApp";
 import React from "react";
-import Button from "./Button";
-import Text from "./Text";
+import Button from "@/components/Button";
+import Text from "@/components/Text";
 
 interface Props {
   title: string;

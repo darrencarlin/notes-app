@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-
-import { noteAppReducer } from "./noteApp";
+import { noteAppReducer } from "@/store/state/noteApp";
 
 const rootReducer = combineReducers({
   noteApp: noteAppReducer,

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import formatRelative from "date-fns/formatRelative";
 import { setNote } from "@/store/state/noteApp";
-import Title from "./Title";
+import Title from "@/components/Title";
 
 const RecentNotes = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ const RecentNotes = (): JSX.Element => {
 
   return (
     <>
-      <Title title="You recent notes" />
+      <Title title="You recent notes" size="sm" />
       <ul className="flex flex-col items-start">
         {recentNotes.slice(0, 10).map((note) => {
           return (

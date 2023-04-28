@@ -1,8 +1,9 @@
 import { useAppSelector } from "@/store/hooks/redux";
 import { BASE_URL } from "@/util/constants";
-import Text from "./Text";
-import RecentNotes from "./RecentNotes";
-import HorizontalRule from "./HorizontalRule";
+import Text from "@/components/Text";
+import HorizontalRule from "@/components/HorizontalRule";
+import RecentNotes from "@/components/RecentNotes";
+import Title from "@/components/Title";
 
 const languages = [
   "tsx",
@@ -16,6 +17,7 @@ const languages = [
   "json",
   "markdown",
   "shell",
+  "yaml",
 ];
 
 const LanguageList = (): JSX.Element => (
@@ -28,12 +30,12 @@ const LanguageList = (): JSX.Element => (
   </ul>
 );
 
-const NoNotesFound = (): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   const { userId, passcode } = useAppSelector((state) => state.noteApp);
 
   return (
-    <div className="bg-gray-800 p-4 px-8">
-      <h1 className="text-2xl font-bold my-4">Alpha Notes</h1>
+    <>
+      <Title title="Alpha Notes" size="lg" />
       <Text>
         To begin taking notes, simply choose an existing note or create a new one.
         You can easily access your notes from any location by bookmarking this{" "}
@@ -67,8 +69,8 @@ const NoNotesFound = (): JSX.Element => {
       <LanguageList />
       <HorizontalRule />
       <RecentNotes />
-    </div>
+    </>
   );
 };
 
-export default NoNotesFound;
+export default HomeScreen;

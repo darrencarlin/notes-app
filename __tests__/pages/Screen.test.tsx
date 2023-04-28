@@ -1,21 +1,21 @@
 import React from "react";
 import { screen, render } from "@testing-library/react";
-import Screen from "@/components/layout/Screen";
+import ScreenLayout from "@/components/layout/AppLayout";
 
 describe("Screen", () => {
   it("renders without crashing", () => {
     render(
-      <Screen>
+      <ScreenLayout>
         <div>Hello World</div>{" "}
-      </Screen>
+      </ScreenLayout>
     );
   });
 
   it("renders children", () => {
     render(
-      <Screen>
+      <ScreenLayout>
         <div>Hello World</div>
-      </Screen>
+      </ScreenLayout>
     );
 
     expect(screen.getByText("Hello World")).toBeInTheDocument();

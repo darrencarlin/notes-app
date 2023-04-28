@@ -1,12 +1,12 @@
 import type { Note, RootState } from "@/types";
-import { Mode } from "@/types";
+import { Screen } from "@/types";
 import { ALPHABET } from "@/util/constants";
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: RootState = {
   userId: "",
   passcode: "",
-  editMode: Mode.VIEW_MODE,
+  screen: Screen.HOME,
   letters: ALPHABET,
   notes: [],
   currentLetter: "",
@@ -29,8 +29,8 @@ export const noteApp = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    setEditMode: (state, action: PayloadAction<Mode>) => {
-      state.editMode = action.payload;
+    setScreen: (state, action: PayloadAction<Screen>) => {
+      state.screen = action.payload;
     },
     setLetter: (state, action: PayloadAction<string>) => {
       state.currentLetter = action.payload;
@@ -43,11 +43,11 @@ export const noteApp = createSlice({
           letter: "",
           lastUpdated: "",
         } as const);
-      state.editMode = Mode.VIEW_MODE;
+      state.screen = Screen.VIEW;
     },
     setNote: (state, action: PayloadAction<Note>) => {
       state.currentNote = action.payload;
-      state.editMode = Mode.VIEW_MODE;
+      state.screen = Screen.VIEW;
       state.currentLetter = action.payload.letter;
       if (state.menuOpen) state.menuOpen = false;
     },
@@ -57,10 +57,6 @@ export const noteApp = createSlice({
     ) => {
       const { notes, userId, passcode } = action.payload;
       state.notes = notes;
-      // state.currentLetter = notes.reduce((acc: string, note: Note) => {
-      //   if (note.letter < acc) return note.letter;
-      //   return acc;
-      // }, "z");
 
       state.currentLetter = "";
       state.currentNote =
@@ -90,10 +86,11 @@ export const noteApp = createSlice({
       state.notes.push(action.payload);
       state.currentNote = { ...action.payload };
       state.currentLetter = action.payload.letter;
-      state.editMode = Mode.VIEW_MODE;
+      state.screen = Screen.VIEW;
     },
-    deleteNote: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
+    deleteNote: (state, action: PayloadAction<Note>) => {
+      const id = action.payload.id;
+      const letter = action.payload.letter;
 
       const noteIndex = state.notes.findIndex((note) => note.id === id);
 
@@ -108,8 +105,10 @@ export const noteApp = createSlice({
         } as const;
       }
 
-      state.editMode = Mode.VIEW_MODE;
-      state.currentLetter = state.notes[0]?.letter ?? "";
+      state.screen = Screen.VIEW;
+      state.currentLetter = state.notes.find((note) => note.letter === letter)
+        ? letter
+        : state.letters[0];
       state.currentNote =
         state.notes.find((note) => note.letter === state.currentLetter) ??
         ({
@@ -131,7 +130,7 @@ export const noteApp = createSlice({
 
 export const {
   setLoading,
-  setEditMode,
+  setScreen,
   setLetter,
   setNote,
   setData,

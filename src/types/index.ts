@@ -6,16 +6,18 @@ export interface Note {
   lastUpdated: string;
 }
 
-export const enum Mode {
-  NEW_MODE = "new",
-  VIEW_MODE = "view",
-  EDIT_MODE = "edit",
+export const enum Screen {
+  HOME = "home",
+  NEW = "new",
+  VIEW = "view",
+  EDIT = "edit",
+  SETTINGS = "settings",
 }
 
 export interface RootState {
   userId: string;
   passcode: string;
-  editMode: Mode;
+  screen: Screen;
   letters: string[];
   notes: Note[];
   currentLetter: string;

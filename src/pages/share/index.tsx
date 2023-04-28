@@ -1,6 +1,6 @@
 import HorizontalRule from "@/components/HorizontalRule";
 import Markdown from "@/components/Markdown";
-import NoteTitle from "@/components/layout/NoteTitle";
+import Title from "@/components/Title";
 import type { Note } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
@@ -66,7 +66,7 @@ const Share: FC<Props> = ({ userId, noteId }): JSX.Element => {
 
   return (
     <ShareLayout>
-      <NoteTitle title={note.title} />
+      <Title title={note.title} size="lg" />
       <HorizontalRule />
       {note?.body && <Markdown markdown={note.body} />}
     </ShareLayout>

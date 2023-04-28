@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import Input from "./Input";
+import Input from "@/components/inputs/Input";
 
 interface Props {
   label: string;

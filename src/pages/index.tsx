@@ -1,10 +1,10 @@
-import Controls from "@/components/layout/Controls";
-import Letters from "@/components/layout/Letters";
-import LoadingScreen from "@/components/layout/LoadingScreen";
-import Note from "@/components/layout/Note";
-import Notes from "@/components/layout/Notes";
-import Screen from "@/components/layout/Screen";
-import useSyncNotesWithFirebase from "@/hooks/useSyncNotesWithFirebase";
+import Controls from "@/components/sections/Controls";
+import Letters from "@/components/sections/Letters";
+import LoadingScreen from "@/components/LoadingScreen";
+import Notes from "@/components/sections/Notes";
+import AppLayout from "@/components/layout/AppLayout";
+import MainScreen from "@/components/sections/MainScreen";
+import useSyncData from "@/hooks/useSyncData";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setData, setLoading } from "@/store/state/noteApp";
 import { type Note as NoteType } from "@/types";
@@ -27,7 +27,7 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
   const dispatch = useAppDispatch();
 
   // Start interval to sync notes to firebase
-  useSyncNotesWithFirebase({ notes, userId, passcode });
+  useSyncData({ notes, userId, passcode });
 
   useEffect(() => {
     dispatch(setData({ notes: data, userId, passcode }));
@@ -59,14 +59,14 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
   if (loading) return <LoadingScreen />;
 
   return (
-    <Screen>
+    <AppLayout>
       <Notes />
       <section className="grid grid-rows-[50px_auto] bg-gray-800">
         <Controls />
-        <Note />
+        <MainScreen />
       </section>
       <Letters />
-    </Screen>
+    </AppLayout>
   );
 }
 

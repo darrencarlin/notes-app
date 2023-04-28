@@ -1,14 +1,15 @@
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteApp";
-import type { Note } from "@/types";
+import { type Note } from "@/types";
 import { checkStringsMatch } from "@/util/functions";
 import classNames from "classnames";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import { useEffect, useState } from "react";
-import BookmarkURL from "../BookmarkURL";
-import Title from "../Title";
-import SearchInput from "../inputs/SearchInput";
+import BookmarkURL from "@/components/BookmarkURL";
+import Title from "@/components/Title";
+import SearchInput from "@/components/inputs/SearchInput";
+import NotesLayout from "@/components/layout/NotesLayout";
 
 const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
@@ -53,7 +54,7 @@ const Notes: FC = () => {
         "fixed top-[50px] left-0 transform translate-x-0 w-full h-[calc(100vh-100px)] border-y border-gray-800":
           menuOpen,
       },
-      "bg-gray-900 p-4 flex flex-col justify-between items-start ease-in-out transition-all duration-300"
+      "bg-gray-900 p-4 flex flex-col items-start ease-in-out transition-all duration-300"
     );
 
     return (
@@ -65,38 +66,44 @@ const Notes: FC = () => {
         )}
 
         <div className={classnames}>
-          <div className="w-full">
-            {hasNoteSelected && (
-              <SearchInput label="Search" handleSearch={handleSearch} />
-            )}
-            <Title title={currentLetter} />
-            <div className="flex flex-col items-start">
-              {filteredNotes.map((n) => {
-                const isActive = checkStringsMatch(
-                  currentNote?.title ?? "",
-                  n.title
-                );
-                const buttonClasses = classNames(
-                  {
-                    "bg-gray-800 rounded": isActive,
-                  },
-                  "mb-2 font-light tracking-wide p-2 text-left"
-                );
-
-                return (
-                  <button
-                    key={n.id}
-                    type="button"
-                    onClick={() => dispatch(setNote(n))}
-                    className={buttonClasses}
-                  >
-                    {n.title}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="flex justify-between items-center w-full">
+            <Title title="Alpha Notes" color="gray" size="sm" uppercase />
+            <Title title={currentLetter} size="sm" uppercase />
           </div>
-          <BookmarkURL />
+          <div className="flex flex-col justify-between w-full h-full">
+            <div>
+              {hasNoteSelected && (
+                <SearchInput label="Search" handleSearch={handleSearch} />
+              )}
+
+              <div className="flex flex-col items-start">
+                {filteredNotes.map((n) => {
+                  const isActive = checkStringsMatch(
+                    currentNote?.title ?? "",
+                    n.title
+                  );
+                  const buttonClasses = classNames(
+                    {
+                      "bg-gray-800 rounded": isActive,
+                    },
+                    "mb-2 font-light tracking-wide p-2 text-left"
+                  );
+
+                  return (
+                    <button
+                      key={n.id}
+                      type="button"
+                      onClick={() => dispatch(setNote(n))}
+                      className={buttonClasses}
+                    >
+                      {n.title}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <BookmarkURL />
+          </div>
         </div>
       </NotesLayout>
     );
@@ -105,10 +112,14 @@ const Notes: FC = () => {
   return (
     <NotesLayout>
       <div className="w-full">
+        <div className="flex justify-between items-center">
+          <Title title="Alpha Notes" color="gray" size="sm" uppercase />
+          <Title title={currentLetter} size="sm" uppercase />
+        </div>
         {hasNoteSelected && (
           <SearchInput label="Search" handleSearch={handleSearch} />
         )}
-        <Title title={currentLetter} />
+
         {hasFilteredNotes ? (
           <div className="flex flex-col items-start">
             {filteredNotes.map((n) => {
@@ -140,11 +151,5 @@ const Notes: FC = () => {
     </NotesLayout>
   );
 };
-
-const NotesLayout: FC<{ children: ReactNode }> = ({ children }) => (
-  <section className="bg-gray-900 p-4 flex flex-col justify-between items-end lg:items-start">
-    {children}
-  </section>
-);
 
 export default Notes;
