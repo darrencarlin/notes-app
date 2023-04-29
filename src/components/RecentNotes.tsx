@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import formatRelative from "date-fns/formatRelative";
-import { setNote } from "@/store/state/noteApp";
+import { setNote } from "@/store/state/noteSlice";
 import Title from "@/components/Title";
 
 const RecentNotes = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { notes } = useAppSelector((state) => state.noteApp);
+  const { notes } = useAppSelector((state) => state.noteSlice);
 
   const recentNotes = Array.from(notes)
     .filter((note) => {

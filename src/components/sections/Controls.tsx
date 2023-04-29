@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setScreen, toggleModal } from "@/store/state/noteApp";
+import { setScreen } from "@/store/state/noteSlice";
+import { toggleModal } from "@/store/state/modalSlice";
 import Button from "@/components/Button";
 import { SlPlus, SlNote, SlTrash, SlEye, SlShare, SlSettings } from "react-icons/sl";
 import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
@@ -10,7 +11,7 @@ import ControlsLayout from "@/components/layout/ControlsLayout";
 
 const Controls: FC = () => {
   const [isCopied, copyToClipboard] = useCopyToClipboard();
-  const { screen, userId, currentNote } = useAppSelector((state) => state.noteApp);
+  const { screen, userId, currentNote } = useAppSelector((state) => state.noteSlice);
 
   const dispatch = useAppDispatch();
 
@@ -47,7 +48,7 @@ const Controls: FC = () => {
                 }
                 text={isCopied ? "Copied" : "Share"}
                 backgroundColor="bg-orange-600"
-                onClick={() => handleShareNote()}
+                onClick={handleShareNote}
               />
             )}
             {canShowDeleteButton && (
@@ -57,7 +58,7 @@ const Controls: FC = () => {
                 }
                 text="Delete"
                 backgroundColor="bg-red-600"
-                onClick={() => dispatch(toggleModal())}
+                onClick={() => dispatch(toggleModal("deleteNoteModal"))}
               />
             )}
             {canShowEditButton && (

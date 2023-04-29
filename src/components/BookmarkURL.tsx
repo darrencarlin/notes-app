@@ -1,14 +1,14 @@
 import { useAppSelector } from "@/store/hooks/redux";
-import { BASE_URL } from "@/util/constants";
+import { bookmarkUrl } from "@/util/functions/bookmarkUrl";
 
 const BookmarkURL = (): JSX.Element => {
-  const { userId, passcode } = useAppSelector((state) => state.noteApp);
+  const { userId, passcode } = useAppSelector((state) => state.noteSlice);
 
   return (
     <div className="mb-4 flex flex-wrap">
       <p className="mr-2">Your unique link: </p>
       <a
-        href={`${BASE_URL}/?userId=${userId}&passcode=${passcode}`}
+        href={bookmarkUrl(userId, passcode)}
         className="flex items-center gap-2 underline font-bold text-blue-400"
       >
         Bookmark me!

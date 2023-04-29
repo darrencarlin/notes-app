@@ -1,12 +1,12 @@
 import Input from "@/components/inputs/Input";
 import TextArea from "@/components/inputs/TextArea";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { editNote } from "@/store/state/noteApp";
+import { editNote } from "@/store/state/noteSlice";
 import type { ChangeEvent } from "react";
 
 const EditScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { currentNote } = useAppSelector((state) => state.noteApp);
+  const { currentNote } = useAppSelector((state) => state.noteSlice);
 
   const updateNote = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,

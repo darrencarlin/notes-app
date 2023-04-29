@@ -3,7 +3,7 @@ import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { addNote } from "@/store/state/noteApp";
+import { addNote } from "@/store/state/noteSlice";
 import { useAppDispatch } from "@/store/hooks/redux";
 import { callToast } from "@/util/toast";
 

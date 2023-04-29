@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { noteAppReducer } from "@/store/state/noteApp";
+import { noteSliceReducer } from "@/store/state/noteSlice";
+import { modalSliceReducer } from "./modalSlice";
 
 const rootReducer = combineReducers({
-  noteApp: noteAppReducer,
+  noteSlice: noteSliceReducer,
+  modalSlice: modalSliceReducer,
 });
 
 const store = configureStore({

@@ -1,9 +1,9 @@
 import { useAppSelector } from "@/store/hooks/redux";
-import { BASE_URL } from "@/util/constants";
 import Text from "@/components/Text";
 import HorizontalRule from "@/components/HorizontalRule";
 import RecentNotes from "@/components/RecentNotes";
 import Title from "@/components/Title";
+import { bookmarkUrl } from "@/util/functions/bookmarkUrl";
 
 const languages = [
   "tsx",
@@ -31,7 +31,7 @@ const LanguageList = (): JSX.Element => (
 );
 
 const HomeScreen = (): JSX.Element => {
-  const { userId, passcode } = useAppSelector((state) => state.noteApp);
+  const { userId, passcode } = useAppSelector((state) => state.noteSlice);
 
   return (
     <>
@@ -41,7 +41,7 @@ const HomeScreen = (): JSX.Element => {
         You can easily access your notes from any location by bookmarking this{" "}
         <a
           className="hover:underline text-blue-400"
-          href={`${BASE_URL}/?userId=${userId}&passcode=${passcode}`}
+          href={bookmarkUrl(userId, passcode)}
         >
           link
         </a>

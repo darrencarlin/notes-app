@@ -1,5 +1,4 @@
-import type { Note, RootState } from "@/types";
-import { Screen } from "@/types";
+import { Screen, type Note, type RootState, type Settings } from "@/types";
 import { ALPHABET } from "@/util/constants";
 import { createSlice, current, type PayloadAction } from "@reduxjs/toolkit";
 
@@ -17,13 +16,15 @@ const initialState: RootState = {
     letter: "",
     lastUpdated: "",
   },
-  modalOpen: false,
   menuOpen: false,
   loading: false,
+  settings: {
+    showBookmarkUrl: true,
+  },
 };
 
-export const noteApp = createSlice({
-  name: "noteApp",
+export const noteSlice = createSlice({
+  name: "noteSlice",
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -53,11 +54,17 @@ export const noteApp = createSlice({
     },
     setData: (
       state,
-      action: PayloadAction<{ notes: Note[]; userId: string; passcode: string }>
+      action: PayloadAction<{
+        notes: Note[];
+        settings: Settings;
+        userId: string;
+        passcode: string;
+      }>
     ) => {
-      const { notes, userId, passcode } = action.payload;
-      state.notes = notes;
+      const { notes, settings, userId, passcode } = action.payload;
 
+      state.notes = notes;
+      state.settings = settings ?? initialState.settings;
       state.currentLetter = "";
       state.currentNote =
         notes.find((note: Note) => note.letter === state.currentLetter) ??
@@ -119,11 +126,11 @@ export const noteApp = createSlice({
           lastUpdated: "",
         } as const);
     },
-    toggleModal: (state) => {
-      state.modalOpen = !state.modalOpen;
-    },
     toggleMenu: (state) => {
       state.menuOpen = !state.menuOpen;
+    },
+    updateSettings: (state, action: PayloadAction<Settings>) => {
+      state.settings = action.payload;
     },
   },
 });
@@ -137,8 +144,8 @@ export const {
   editNote,
   addNote,
   deleteNote,
-  toggleModal,
   toggleMenu,
-} = noteApp.actions;
+  updateSettings,
+} = noteSlice.actions;
 
-export const noteAppReducer = noteApp.reducer;
+export const noteSliceReducer = noteSlice.reducer;

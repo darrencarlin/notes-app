@@ -1,6 +1,6 @@
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setNote, toggleMenu } from "@/store/state/noteApp";
+import { setNote, toggleMenu } from "@/store/state/noteSlice";
 import { type Note } from "@/types";
 import { checkStringsMatch } from "@/util/functions";
 import classNames from "classnames";
@@ -14,8 +14,8 @@ import NotesLayout from "@/components/layout/NotesLayout";
 const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
 
-  const { notes, currentLetter, currentNote, menuOpen } = useAppSelector(
-    (state) => state.noteApp
+  const { notes, currentLetter, currentNote, menuOpen, settings } = useAppSelector(
+    (state) => state.noteSlice
   );
 
   const dispatch = useAppDispatch();
@@ -45,6 +45,7 @@ const Notes: FC = () => {
   const hasNotes = notes.length > 0;
   const hasFilteredNotes = filteredNotes.length > 0;
   const hasNoteSelected = currentNote.id !== "";
+  const showBookmarkUrl = settings.showBookmarkUrl;
 
   if (width < 1024) {
     const classnames = classNames(
@@ -144,10 +145,10 @@ const Notes: FC = () => {
             })}
           </div>
         ) : (
-          <p className="text-gray-500">No letter selected</p>
+          <p>No letter selected</p>
         )}
       </div>
-      <BookmarkURL />
+      {showBookmarkUrl && <BookmarkURL />}
     </NotesLayout>
   );
 };

@@ -1,11 +1,12 @@
 import Text from "@/components/Text";
+import Title from "@/components/Title";
 import Link from "next/link";
 
 export default function Custom404(): JSX.Element {
   return (
     <div className="w-screen h-screen bg-gray-900 flex justify-center items-center">
       <div className="max-w-xl">
-        <h1 className="text-2xl mb-4">404 - Page Not Found</h1>
+        <Title size="lg" title="404" />
         <Text>
           Your account may have been removed, this typically happens if you do not
           add any notes and 24 hours has passed.

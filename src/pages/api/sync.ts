@@ -1,4 +1,5 @@
 import { db } from "@/util/firebase/admin";
+import { verifyPasscode } from "@/util/functions/verifyCredentials";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
@@ -24,7 +25,7 @@ export default async function handler(
     if (userDoc.exists) {
       const userData = userDoc.data();
 
-      const passcodeMatch = userData?.passcode === passcode;
+      const passcodeMatch = verifyPasscode(userData?.passcode, passcode);
       // if user exists, check if passcode matches
       if (passcodeMatch) {
         for (const note of notes) {

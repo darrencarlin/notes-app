@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import axios from "axios";
 import { callToast } from "@/util/toast";
-import { deleteNote } from "@/store/state/noteApp";
+import { deleteNote } from "@/store/state/noteSlice";
 import { type Note, Screen } from "@/types";
 
 const HomeScreen = dynamic(async () => await import("../screens/HomeScreen"));
@@ -17,8 +17,9 @@ const SettingScreen = dynamic(async () => await import("../screens/SettingsScree
 const MainScreen = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { screen, currentNote, userId, passcode } = useAppSelector(
-    (state) => state.noteApp
+    (state) => state.noteSlice
   );
+  const { deleteNoteModal } = useAppSelector((state) => state.modalSlice);
 
   const handleDeleteNote = async (currentNote: Note): Promise<void> => {
     const response = await axios.post(
@@ -60,7 +61,8 @@ const MainScreen = (): JSX.Element => {
       {isEditScreen && <EditScreen />}
       {isSettingsScreen && <SettingScreen />}
       <Modal
-        title="Delete Note"
+        modalId="deleteNoteModal"
+        toggle={deleteNoteModal}
         body="Are you sure you want to delete this note? This action cannot be undone."
         action={async () => await handleDeleteNote(currentNote)}
         actionText="Delete"

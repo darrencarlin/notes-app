@@ -1,12 +1,15 @@
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setLetter } from "@/store/state/noteApp";
+import { setLetter } from "@/store/state/noteSlice";
 import { checkStringsMatch } from "@/util/functions";
 import useWindowWidth from "@/hooks/useWindowWidth";
 import classNames from "classnames";
+import LettersLayout from "../layout/LettersLayout";
 
 const Letters: FC = () => {
-  const { letters, currentLetter, notes } = useAppSelector((state) => state.noteApp);
+  const { letters, currentLetter, notes } = useAppSelector(
+    (state) => state.noteSlice
+  );
 
   const dispatch = useAppDispatch();
 
@@ -79,11 +82,5 @@ const Letters: FC = () => {
     </LettersLayout>
   );
 };
-
-const LettersLayout: FC<{ children: ReactNode }> = ({ children }) => (
-  <section className="no-scrollbar p-4 bg-gray-900 gap-4 overflow-x-scroll flex lg:flex-col md:justify-between md:overflow-y-scroll max-h-[100dvh]">
-    {children}
-  </section>
-);
 
 export default Letters;

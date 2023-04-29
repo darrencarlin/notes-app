@@ -6,7 +6,7 @@ import AppLayout from "@/components/layout/AppLayout";
 import MainScreen from "@/components/sections/MainScreen";
 import useSyncData from "@/hooks/useSyncData";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setData, setLoading } from "@/store/state/noteApp";
+import { setData, setLoading } from "@/store/state/noteSlice";
 import { type Note as NoteType } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import { generateRandomString } from "@/util/functions";
@@ -21,17 +21,13 @@ interface Props {
   passcode: string;
 }
 
-export default function Home({ data, userId, passcode }: Props): JSX.Element {
+export default function Home({ userId, passcode }: Props): JSX.Element {
   const router = useRouter();
-  const { notes, loading } = useAppSelector((state) => state.noteApp);
+  const { notes, loading } = useAppSelector((state) => state.noteSlice);
   const dispatch = useAppDispatch();
 
   // Start interval to sync notes to firebase
   useSyncData({ notes, userId, passcode });
-
-  useEffect(() => {
-    dispatch(setData({ notes: data, userId, passcode }));
-  }, [dispatch, data, userId, passcode]);
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -45,9 +41,9 @@ export default function Home({ data, userId, passcode }: Props): JSX.Element {
         DEFAULT_HEADERS
       );
 
-      const { data } = response;
+      const { notes, settings } = response.data;
 
-      dispatch(setData({ notes: data, userId, passcode }));
+      dispatch(setData({ notes, settings, userId, passcode }));
       setTimeout(() => {
         dispatch(setLoading(false));
       }, 1000);

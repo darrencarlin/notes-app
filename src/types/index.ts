@@ -14,6 +14,10 @@ export const enum Screen {
   SETTINGS = "settings",
 }
 
+export interface Settings {
+  showBookmarkUrl: boolean;
+}
+
 export interface RootState {
   userId: string;
   passcode: string;
@@ -22,9 +26,17 @@ export interface RootState {
   notes: Note[];
   currentLetter: string;
   currentNote: Note;
-  modalOpen: boolean;
   menuOpen: boolean;
   loading: boolean;
+  settings: Settings;
+}
+
+export type Modals = "deleteNoteModal" | "deleteDataModal";
+
+export interface ModalState {
+  deleteNoteModal: boolean;
+  deleteDataModal: boolean;
+  [key: string]: boolean;
 }
 
 // Markdown
@@ -38,7 +50,6 @@ export interface Props {
 export interface Node {
   type: string;
   tagName: string;
-
   children: Child[];
   position: Position;
 }

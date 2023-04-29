@@ -10,24 +10,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ): Promise<void> {
-  const { id, userId, passcode } = req.body;
+  const { userId, passcode } = req.body;
 
   // validate input
-  if (!id || !userId) {
+  if (!userId || !passcode) {
     return res.status(400).json({ message: "Invalid input" });
   }
 
   try {
-    const docRef = await db
-      .collection("users")
-      .doc(userId)
-      .collection("notes")
-      .doc(id)
-      .get();
+    const docRef = await db.collection("users").doc(userId).get();
+
     if (!docRef.exists) {
       return res.status(404).json({
-        message:
-          "Note not found, please try again in 30 seconds giving time for the note to sync with the database",
+        message: "User not found,",
       });
     }
 
@@ -36,8 +31,8 @@ export default async function handler(
     const passcodeMatch = verifyPasscode(user?.passcode, passcode);
 
     if (passcodeMatch) {
-      await db.collection("users").doc(userId).collection("notes").doc(id).delete();
-      res.status(200).json({ message: "Note Deleted 🗑️" });
+      await db.collection("users").doc(userId).delete();
+      res.status(200).json({ message: "User Deleted 🗑️" });
     }
     return res.status(401).json({ message: "Invalid passcode" });
   } catch (error) {
