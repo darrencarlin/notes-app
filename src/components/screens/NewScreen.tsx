@@ -33,6 +33,7 @@ const NewScreen = (): JSX.Element => {
         value={newNoteTitle}
         placeholder="Title"
         type="text"
+        maxLength={100}
         onChange={(e) => setNewNoteTitle(e.target.value)}
       />
 
@@ -42,6 +43,7 @@ const NewScreen = (): JSX.Element => {
         value={newNoteBody}
         height
         onChange={(e) => setNewNoteBody(e.target.value)}
+        maxLength={50000}
       />
       <Button
         type="button"
