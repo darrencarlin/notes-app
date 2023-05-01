@@ -27,7 +27,7 @@ const RecentNotes = (): JSX.Element => {
   return (
     <>
       <Title title="You recent notes" size="sm" />
-      <ul className="flex flex-col items-start">
+      <ul className="flex flex-col items-start mb-[50px]">
         {recentNotes.map((note) => {
           return (
             <li key={note.id} className="flex items-center gap-4">
