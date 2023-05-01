@@ -10,6 +10,7 @@ import BookmarkURL from "@/components/BookmarkURL";
 import Title from "@/components/Title";
 import SearchInput from "@/components/inputs/SearchInput";
 import NotesLayout from "@/components/layout/NotesLayout";
+import { SlMenu, SlClose } from "react-icons/sl";
 
 const Notes: FC = () => {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
@@ -62,7 +63,7 @@ const Notes: FC = () => {
       <NotesLayout>
         {hasNotes && (
           <button className="z-10" onClick={() => dispatch(toggleMenu())}>
-            {menuOpen ? "Close" : "Menu"}
+            {menuOpen ? <SlClose size="1.25em" /> : <SlMenu size="1.25em" />}
           </button>
         )}
 
