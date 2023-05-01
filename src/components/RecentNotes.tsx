@@ -13,15 +13,14 @@ const RecentNotes = (): JSX.Element => {
       const currentDate = new Date();
       const difference = currentDate.getTime() - date.getTime();
       const differenceInDays = difference / (1000 * 3600 * 24);
-
       return differenceInDays <= 7;
     })
     .sort((a, b) => {
       const dateA = new Date(a.lastUpdated);
       const dateB = new Date(b.lastUpdated);
-
       return dateB.getTime() - dateA.getTime();
-    });
+    })
+    .slice(0, 10);
 
   if (recentNotes.length === 0) return <></>;
 
@@ -29,7 +28,7 @@ const RecentNotes = (): JSX.Element => {
     <>
       <Title title="You recent notes" size="sm" />
       <ul className="flex flex-col items-start">
-        {recentNotes.slice(0, 10).map((note) => {
+        {recentNotes.map((note) => {
           return (
             <li key={note.id} className="flex items-center gap-4">
               <button
