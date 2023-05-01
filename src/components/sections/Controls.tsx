@@ -8,6 +8,7 @@ import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
 import { BASE_URL } from "@/util/constants";
 import { Screen } from "@/types";
 import ControlsLayout from "@/components/layout/ControlsLayout";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 const Controls: FC = () => {
   const [isCopied, copyToClipboard] = useCopyToClipboard();
@@ -26,6 +27,8 @@ const Controls: FC = () => {
     const shareLink = `${BASE_URL}/share/?userId=${userId}&noteId=${currentNote.id}`;
     copyToClipboard(shareLink);
   };
+
+  const width = useWindowWidth();
 
   return (
     <ControlsLayout>
@@ -46,7 +49,7 @@ const Controls: FC = () => {
                 icon={
                   <SlShare className="group-hover:rotate-[-10deg] transition-all duration-300 ease-in-out" />
                 }
-                text={isCopied ? "Copied" : "Share"}
+                text={isCopied ? "Copied" : width > 640 ? "Share" : ""}
                 backgroundColor="bg-orange-600"
                 onClick={handleShareNote}
               />
@@ -56,7 +59,7 @@ const Controls: FC = () => {
                 icon={
                   <SlTrash className="group-hover:rotate-[-10deg] transition-all duration-300 ease-in-out" />
                 }
-                text="Delete"
+                text={width > 640 ? "Delete" : ""}
                 backgroundColor="bg-red-600"
                 onClick={() => dispatch(toggleModal("deleteNoteModal"))}
               />
@@ -66,7 +69,7 @@ const Controls: FC = () => {
                 icon={
                   <SlNote className="group-hover:rotate-[-10deg] transition-all duration-300 ease-in-out" />
                 }
-                text="Edit"
+                text={width > 640 ? "Edit" : ""}
                 backgroundColor="bg-green-600"
                 onClick={() => dispatch(setScreen(Screen.EDIT))}
               />
@@ -77,7 +80,7 @@ const Controls: FC = () => {
                 icon={
                   <SlEye className="group-hover:rotate-[-10deg] transition-all duration-300 ease-in-out" />
                 }
-                text="View"
+                text={width > 640 ? "View" : ""}
                 backgroundColor="bg-blue-600"
                 onClick={() => dispatch(setScreen(Screen.VIEW))}
               />
