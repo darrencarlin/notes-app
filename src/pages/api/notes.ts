@@ -19,7 +19,7 @@ export default async function handler(
 
   try {
     // Get the user from the database and check if the passcode matches
-    const userData = (await db.collection("users").doc(userId).get()).data() || {};
+    const userData = (await db.collection("users").doc(userId).get()).data() ?? {};
     const userPasscode = userData.passcode;
 
     const passcodeMatch = verifyPasscode(userPasscode, passcode);
