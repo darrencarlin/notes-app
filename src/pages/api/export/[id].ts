@@ -1,5 +1,5 @@
 import { db } from "@/util/firebase/admin";
-import { verifyPasscode } from "@/util/functions/verifyCredentials";
+import { verifyPasscode } from "@/util/functions";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
@@ -12,14 +12,11 @@ export default async function handler(
 ): Promise<void> {
   const { id } = req.query;
 
-  console.log({ id });
-
   if (!id) return res.status(400).json({ message: "Invalid input" });
 
   const userId = id.toString().split("-")[0];
   const passcode = id.toString().split("-")[1];
 
-  console.log({ userId, passcode });
 
   // validate input
   if (!userId || !passcode) {

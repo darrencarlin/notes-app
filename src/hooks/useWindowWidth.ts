@@ -19,6 +19,8 @@ function useWindowWidth(): number {
 
       window.addEventListener("resize", handleResize);
 
+      window.addEventListener("orientationchange", handleResize)
+
       return () => window.removeEventListener("resize", handleResize);
     }
   }, []);

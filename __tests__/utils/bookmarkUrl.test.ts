@@ -1,4 +1,4 @@
-import { bookmarkUrl } from "@/util/functions/bookmarkUrl";
+import { bookmarkUrl } from "@/util/functions";
 import { BASE_URL } from "@/util/constants";
 
 describe("bookmarkUrl", () => {

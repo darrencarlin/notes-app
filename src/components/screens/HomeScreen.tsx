@@ -3,7 +3,7 @@ import Text from "@/components/Text";
 import HorizontalRule from "@/components/HorizontalRule";
 import RecentNotes from "@/components/RecentNotes";
 import Title from "@/components/Title";
-import { bookmarkUrl } from "@/util/functions/bookmarkUrl";
+import { bookmarkUrl } from "@/util/functions";
 
 const languages = [
   "tsx",

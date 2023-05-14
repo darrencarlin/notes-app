@@ -1,5 +1,5 @@
 import { db } from "@/util/firebase/admin";
-import { verifyPasscode } from "@/util/functions/verifyCredentials";
+import { verifyPasscode } from "@/util/functions";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /**

@@ -1,4 +1,4 @@
-import { generateRandomString } from "@/util/functions/generateRandomString";
+import { generateRandomString } from "@/util/functions";
 
 describe("generateRandomString function", () => {
   it("returns a string of the expected length", () => {

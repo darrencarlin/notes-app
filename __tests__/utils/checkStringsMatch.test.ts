@@ -1,4 +1,4 @@
-import { checkStringsMatch } from "@/util/functions/checkStringsMatch";
+import { checkStringsMatch } from "@/util/functions";
 
 describe("checkStringsMatch function", () => {
   it("returns true for two identical strings", () => {

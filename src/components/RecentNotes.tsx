@@ -2,25 +2,13 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import formatRelative from "date-fns/formatRelative";
 import { setNote } from "@/store/state/noteSlice";
 import Title from "@/components/Title";
+import { getRecentNotes } from "@/util/functions";
 
 const RecentNotes = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { notes } = useAppSelector((state) => state.noteSlice);
 
-  const recentNotes = Array.from(notes)
-    .filter((note) => {
-      const date = new Date(note.lastUpdated);
-      const currentDate = new Date();
-      const difference = currentDate.getTime() - date.getTime();
-      const differenceInDays = difference / (1000 * 3600 * 24);
-      return differenceInDays <= 7;
-    })
-    .sort((a, b) => {
-      const dateA = new Date(a.lastUpdated);
-      const dateB = new Date(b.lastUpdated);
-      return dateB.getTime() - dateA.getTime();
-    })
-    .slice(0, 10);
+  const recentNotes = getRecentNotes(notes)
 
   if (recentNotes.length === 0) return <></>;
 

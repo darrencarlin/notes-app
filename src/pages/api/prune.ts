@@ -11,25 +11,28 @@ export default async function handler(
 ): Promise<void> {
   try {
     // Get all the notes from the database
-    const users = await db.collection("users").get();
-
-    let count = 0;
+    const usersSnapshot = await db.collection("users").get();
+    const usersToDelete = [];
 
     // Loop through each user
-    for (const user of users.docs) {
-      const userNotes = await db
+    for (const userDoc of usersSnapshot.docs) {
+      const userNotesSnapshot = await db
         .collection("users")
-        .doc(user.id)
+        .doc(userDoc.id)
         .collection("notes")
         .get();
 
-      if (userNotes.empty) {
-        await db.collection("users").doc(user.id).delete();
-        count++;
+      if (userNotesSnapshot.empty) {
+        usersToDelete.push(userDoc.ref);
       }
     }
 
-    return res.status(200).json({ message: `Pruned ${count} accounts.` });
+    // Delete all the users in parallel using batched writes
+    const batch = db.batch();
+    usersToDelete.forEach((userRef) => batch.delete(userRef));
+    await batch.commit();
+
+    return res.status(200).json({ message: `Pruned ${usersToDelete.length} accounts.` });
   } catch (error) {
     // log error
     console.error(error);

@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/store/hooks/redux";
-import { bookmarkUrl } from "@/util/functions/bookmarkUrl";
+import { bookmarkUrl } from "@/util/functions";
 
 const BookmarkURL = (): JSX.Element => {
   const { userId, passcode } = useAppSelector((state) => state.noteSlice);
