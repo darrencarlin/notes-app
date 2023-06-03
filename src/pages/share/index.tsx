@@ -13,7 +13,7 @@ interface ShareLayoutProps {
 
 const ShareLayout: FC<ShareLayoutProps> = ({ children }): JSX.Element => {
   return (
-    <div className="bg-gray-800 m-w-screen min-h-screen py-16">
+    <div className="min-h-screen p-4 bg-gray-800 lg:p-8 m-w-screen">
       <div className="max-w-5xl m-auto">{children}</div>
     </div>
   );
