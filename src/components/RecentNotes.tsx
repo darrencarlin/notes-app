@@ -1,3 +1,5 @@
+"use client"
+
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import formatRelative from "date-fns/formatRelative";
 import { setNote } from "@/store/state/noteSlice";
@@ -22,11 +24,11 @@ const RecentNotes = (): JSX.Element => {
               <button
                 type="button"
                 onClick={() => dispatch(setNote(note))}
-                className="font-light tracking-wide text-left p-2 hover:bg-gray-700 hover:shadow-md transition-all duration-300 ease-in-out hover:rounded"
+                className="p-2 font-light tracking-wide text-left transition-all duration-300 ease-in-out hover:bg-gray-700 hover:shadow-md hover:rounded"
               >
                 {note.title}
               </button>
-              <span className="text-gray-500 text-sm">
+              <span className="text-sm text-gray-500">
                 last edited {formatRelative(new Date(note.lastUpdated), new Date())}
               </span>
             </li>

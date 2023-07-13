@@ -1,3 +1,5 @@
+"use client"
+
 import type { FC } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setLetter } from "@/store/state/noteSlice";

@@ -1,3 +1,5 @@
+"use client"
+
 import type { FC } from "react";
 import { useAppDispatch } from "@/store/hooks/redux";
 import { toggleModal } from "@/store/state/modalSlice";
@@ -25,7 +27,7 @@ const Modal: FC<Props> = ({ toggle, modalId, body, action, actionText }) => {
     <>
       {toggle && (
         <div
-          className="fixed inset-0 bg-gray-900 bg-opacity-80 transition-opacity"
+          className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-80"
           onClick={() => dispatch(toggleModal(modalId))}
           aria-hidden="true"
         />
@@ -33,7 +35,7 @@ const Modal: FC<Props> = ({ toggle, modalId, body, action, actionText }) => {
 
       {toggle && (
         <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto">
-          <div className="relative w-fit rounded bg-white flex flex-col gap-4 p-6">
+          <div className="relative flex flex-col gap-4 p-6 bg-white rounded w-fit">
             <Text color="gray">{body}</Text>
             <div className="flex justify-end gap-4">
               <Button text="Cancel" onClick={() => dispatch(toggleModal(modalId))} />

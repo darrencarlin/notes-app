@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 
 const NotesLayout: FC<{ children: ReactNode }> = ({ children }) => (
-  <section className="bg-gray-900 p-4 flex flex-col justify-between items-end lg:items-start">
+  <section className="z-10 flex flex-col items-end justify-between p-4 bg-gray-900 lg:items-start">
     {children}
   </section>
 );

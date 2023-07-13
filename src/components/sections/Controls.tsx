@@ -1,18 +1,30 @@
-import type { FC } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
-import { setScreen } from "@/store/state/noteSlice";
-import { toggleModal } from "@/store/state/modalSlice";
+"use client";
+
 import Button from "@/components/Button";
-import { SlPlus, SlNote, SlTrash, SlEye, SlShare, SlSettings } from "react-icons/sl";
-import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
-import { BASE_URL } from "@/util/constants";
-import { Screen } from "@/types";
 import ControlsLayout from "@/components/layout/ControlsLayout";
+import useCopyToClipboard from "@/hooks/useCopyToClipBoard";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
+import { toggleModal } from "@/store/state/modalSlice";
+import { setScreen } from "@/store/state/noteSlice";
+import { Screen } from "@/types";
+import { BASE_URL } from "@/util/constants";
+import type { FC } from "react";
+import {
+  SlEye,
+  SlNote,
+  SlPlus,
+  SlSettings,
+  SlShare,
+  SlTrash,
+} from "react-icons/sl";
 
 const Controls: FC = () => {
   const [isCopied, copyToClipboard] = useCopyToClipboard();
-  const { screen, userId, currentNote } = useAppSelector((state) => state.noteSlice);
+  const width = useWindowWidth();
+  const { screen, userId, currentNote } = useAppSelector(
+    (state) => state.noteSlice
+  );
 
   const dispatch = useAppDispatch();
 
@@ -28,8 +40,6 @@ const Controls: FC = () => {
     copyToClipboard(shareLink);
   };
 
-  const width = useWindowWidth();
-
   return (
     <ControlsLayout>
       {canShowCreateButton && (
@@ -40,7 +50,6 @@ const Controls: FC = () => {
           onClick={() => dispatch(setScreen(Screen.NEW))}
         />
       )}
-
       <div className="flex gap-4">
         {!isOnHomeScreen && (
           <>

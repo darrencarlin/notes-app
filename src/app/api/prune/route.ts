@@ -1,14 +1,10 @@
 import { db } from "@/util/firebase/admin";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 /**
  * This endpoint is a cron job that prunes accounts that have no notes. It runs every 24 hours.
  */
 
-export default async function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> {
+export async function GET(): Promise<Response> {
   try {
     // Get all the notes from the database
     const usersSnapshot = await db.collection("users").get();
@@ -32,14 +28,28 @@ export default async function handler(
     usersToDelete.forEach((userRef) => batch.delete(userRef));
     await batch.commit();
 
-    return res.status(200).json({ message: `Pruned ${usersToDelete.length} accounts.` });
+    return new Response(
+      JSON.stringify({ message: `Pruned ${usersToDelete.length} accounts.` }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
-    // log error
     console.error(error);
 
-    // send error response
-    return res
-      .status(500)
-      .json({ message: "Unable to prune notes. Please try again later." });
+    return new Response(
+      JSON.stringify({
+        message: "Unable to prune notes. Please try again later.",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }

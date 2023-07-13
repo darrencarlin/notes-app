@@ -1,3 +1,5 @@
+"use client"
+
 import Input from "@/components/inputs/Input";
 import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/Button";

@@ -24,7 +24,7 @@ const SettingsScreen: FC = (): JSX.Element => {
     showBookmarkUrl,
   }: Settings): Promise<void> => {
     const response = await axios.post(
-      BASE_URL + "/api/settings",
+      BASE_URL + "/api/user-settings",
       {
         userId,
         passcode,
@@ -98,7 +98,7 @@ const SettingsScreen: FC = (): JSX.Element => {
             text="Export Data"
             backgroundColor="bg-blue-600"
             onClick={async () =>
-              await router.push(`api/export/${userId}-${passcode}`)
+              await router.push(`api/export/?id=${userId}-${passcode}`)
             }
           />
         </div>

@@ -1,14 +1,15 @@
+"use client";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import type { Note } from "@/types";
 import { callToast } from "@/util/toast";
 import { isEqual } from "underscore";
+import { useAppSelector } from "@/store/hooks/redux";
 
 interface Props {
   notes: Note[];
-  userId: string;
-  passcode: string;
 }
 
 /**
@@ -16,9 +17,11 @@ interface Props {
  * Syncs data with Firebase every 30 seconds.
  */
 
-function useSyncData({ notes, userId, passcode }: Props): void {
+function useSyncData({ notes = [] }: Props): void {
   const [hasStarted, setHasStarted] = useState(false);
   const [previousNotes, setPreviousNotes] = useState<Note[]>([]);
+
+  const { userId, passcode } = useAppSelector((state) => state.noteSlice);
 
   useEffect(() => {
     const syncNotesWithFirebase = async (
@@ -59,7 +62,8 @@ function useSyncData({ notes, userId, passcode }: Props): void {
         const newNotes = notes.filter(
           (note) =>
             note.lastUpdated !==
-            previousNotes.find((prevNote) => prevNote.id === note.id)?.lastUpdated
+            previousNotes.find((prevNote) => prevNote.id === note.id)
+              ?.lastUpdated
         );
 
         if (newNotes.length === 0) return;

@@ -1,3 +1,5 @@
+"use client";
+
 import ScreenLayout from "@/components/layout/ScreenLayout";
 import Modal from "@/components/Modal";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";

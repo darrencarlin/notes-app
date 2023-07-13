@@ -2,9 +2,9 @@ import Text from "@/components/Text";
 import Title from "@/components/Title";
 import Link from "next/link";
 
-export default function Custom404(): JSX.Element {
+export default function NotFound(): JSX.Element {
   return (
-    <div className="w-screen h-screen bg-gray-900 flex justify-center items-center">
+    <div className="flex items-center justify-center w-screen h-screen bg-gray-900">
       <div className="max-w-xl">
         <Title size="lg" title="404" />
         <Text>
@@ -14,7 +14,7 @@ export default function Custom404(): JSX.Element {
 
         <Text>
           If this was the case, you can create a new account by going back to the{" "}
-          <Link href="/" className="underline text-blue-400">
+          <Link href="/" className="text-blue-400 underline">
             home page
           </Link>
           .

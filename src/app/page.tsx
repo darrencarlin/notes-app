@@ -1,37 +1,33 @@
+"use client";
+
+import LoadingScreen from "@/components/LoadingScreen";
+import AppLayout from "@/components/layout/AppLayout";
 import Controls from "@/components/sections/Controls";
 import Letters from "@/components/sections/Letters";
-import LoadingScreen from "@/components/LoadingScreen";
-import Notes from "@/components/sections/Notes";
-import AppLayout from "@/components/layout/AppLayout";
 import MainScreen from "@/components/sections/MainScreen";
+import Notes from "@/components/sections/Notes";
 import useSyncData from "@/hooks/useSyncData";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setData, setLoading } from "@/store/state/noteSlice";
-import { type Note as NoteType } from "@/types";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import { generateRandomString } from "@/util/functions";
 import axios from "axios";
-import type { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-interface Props {
-  data: NoteType[];
-  userId: string;
-  passcode: string;
-}
-
-export default function Home({ userId, passcode }: Props): JSX.Element {
-  const router = useRouter();
+export default function Page({
+  searchParams: { userId, passcode },
+}: {
+  searchParams: { userId: string; passcode: string };
+}): JSX.Element {
   const { notes, loading } = useAppSelector((state) => state.noteSlice);
+
   const dispatch = useAppDispatch();
 
-  // Start interval to sync notes to firebase
-  useSyncData({ notes, userId, passcode });
-
   useEffect(() => {
+    if (!userId || !passcode) return;
     const fetchData = async (): Promise<void> => {
       dispatch(setLoading(true));
+
       const response = await axios.post(
         BASE_URL + "/api/notes",
         {
@@ -44,13 +40,46 @@ export default function Home({ userId, passcode }: Props): JSX.Element {
       const { notes, settings } = response.data;
 
       dispatch(setData({ notes, settings, userId, passcode }));
+
       setTimeout(() => {
         dispatch(setLoading(false));
       }, 1000);
     };
 
     void fetchData();
-  }, [dispatch, passcode, router, userId]);
+  }, [dispatch, passcode, userId]);
+
+  useEffect(() => {
+    const createUser = async (): Promise<void> => {
+      const userId = generateRandomString(20);
+      const passcode = generateRandomString(20);
+      await axios.post(
+        BASE_URL + "/api/create-user",
+        {
+          userId: generateRandomString(20),
+          passcode: generateRandomString(20),
+        },
+        DEFAULT_HEADERS
+      );
+
+      dispatch(
+        setData({
+          notes,
+          settings: {
+            showBookmarkUrl: true,
+          },
+          userId,
+          passcode,
+        })
+      );
+    };
+
+    if (!userId || !passcode) {
+      void createUser();
+    }
+  }, [dispatch, notes, passcode, userId]);
+
+  useSyncData({ notes });
 
   if (loading) return <LoadingScreen />;
 
@@ -65,40 +94,3 @@ export default function Home({ userId, passcode }: Props): JSX.Element {
     </AppLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId, passcode } = context.query;
-
-  // if new user (no query params in URL)
-  if (!userId || !passcode) {
-    const userId = generateRandomString(20);
-    const passcode = generateRandomString(10);
-
-    await axios.post(
-      BASE_URL + "/api/create-user",
-      {
-        userId,
-        passcode,
-      },
-      DEFAULT_HEADERS
-    );
-
-    return {
-      props: {
-        data: [],
-        userId,
-        passcode,
-      },
-    };
-  }
-
-  // if existing user (query params in URL)
-
-  return {
-    props: {
-      data: [],
-      userId,
-      passcode,
-    },
-  };
-};

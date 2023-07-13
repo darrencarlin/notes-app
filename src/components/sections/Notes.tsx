@@ -1,3 +1,5 @@
+"use client";
+
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/redux";
 import { setNote, toggleMenu } from "@/store/state/noteSlice";
@@ -68,7 +70,7 @@ const Notes: FC = () => {
         )}
 
         <div className={classnames}>
-          <div className="flex justify-between items-center w-full">
+          <div className="flex items-center justify-between w-full">
             <Title title="Alpha Notes" color="gray" size="sm" uppercase />
             <Title title={currentLetter} size="sm" uppercase />
           </div>
@@ -114,7 +116,7 @@ const Notes: FC = () => {
   return (
     <NotesLayout>
       <div className="w-full">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <Title title="Alpha Notes" color="gray" size="sm" uppercase />
           <Title title={currentLetter} size="sm" uppercase />
         </div>
