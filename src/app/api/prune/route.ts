@@ -18,6 +18,7 @@ export async function GET(): Promise<Response> {
         .collection("notes")
         .get();
 
+      // If the user has no notes, add them to the delete array
       if (userNotesSnapshot.empty) {
         usersToDelete.push(userDoc.ref);
       }

@@ -41,9 +41,7 @@ export default function Page({
 
       dispatch(setData({ notes, settings, userId, passcode }));
 
-      setTimeout(() => {
-        dispatch(setLoading(false));
-      }, 1000);
+      dispatch(setLoading(false));
     };
 
     void fetchData();
@@ -56,8 +54,8 @@ export default function Page({
       await axios.post(
         BASE_URL + "/api/create-user",
         {
-          userId: generateRandomString(20),
-          passcode: generateRandomString(20),
+          userId,
+          passcode,
         },
         DEFAULT_HEADERS
       );
