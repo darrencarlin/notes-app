@@ -18,13 +18,14 @@ const languages = [
   "markdown",
   "shell",
   "yaml",
+  "php",
 ];
 
 const LanguageList = (): JSX.Element => (
   <ul className="flex flex-wrap gap-2">
     {languages.map((language) => (
       <li className="mb-2" key={language}>
-        <code className="bg-gray-500 rounded p-1">{language}</code>
+        <code className="rounded bg-gray-500 p-1">{language}</code>
       </li>
     ))}
   </ul>
@@ -37,10 +38,11 @@ const HomeScreen = (): JSX.Element => {
     <>
       <Title title="Alpha Notes" size="lg" />
       <Text>
-        To begin taking notes, simply choose an existing note or create a new one.
-        You can easily access your notes from any location by bookmarking this{" "}
+        To begin taking notes, simply choose an existing note or create a new
+        one. You can easily access your notes from any location by bookmarking
+        this{" "}
         <a
-          className="hover:underline text-blue-400"
+          className="text-blue-400 hover:underline"
           href={bookmarkUrl(userId, passcode)}
         >
           link
@@ -49,9 +51,9 @@ const HomeScreen = (): JSX.Element => {
       </Text>
 
       <Text>
-        It&apos;s important to note (no pun intended) that this website is intended
-        for self-learning and reference purposes only. Please avoid storing any
-        sensitive information within your notes.
+        It&apos;s important to note (no pun intended) that this website is
+        intended for self-learning and reference purposes only. Please avoid
+        storing any sensitive information within your notes.
       </Text>
 
       <Text>
@@ -59,7 +61,7 @@ const HomeScreen = (): JSX.Element => {
         <a
           target="_blank"
           rel="noreferrer"
-          className="hover:underline text-blue-400"
+          className="text-blue-400 hover:underline"
           href="https://www.markdownguide.org/cheat-sheet/"
         >
           markdown
