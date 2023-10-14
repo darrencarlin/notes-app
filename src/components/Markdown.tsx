@@ -12,6 +12,7 @@ import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown
 import yaml from "react-syntax-highlighter/dist/cjs/languages/prism/yaml";
 import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import python from "react-syntax-highlighter/dist/cjs/languages/prism/python";
+import php from "react-syntax-highlighter/dist/cjs/languages/prism/php";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { type Props } from "@/types";
 
@@ -26,6 +27,7 @@ SyntaxHighlighter.registerLanguage("markdown", markdown);
 SyntaxHighlighter.registerLanguage("json", json);
 SyntaxHighlighter.registerLanguage("python", python);
 SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("php", php);
 
 interface MarkdownProps {
   markdown: string & { content?: string };
