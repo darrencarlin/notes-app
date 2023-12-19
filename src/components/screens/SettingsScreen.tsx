@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import type { FC } from "react";
 import Title from "@/components/Title";
@@ -12,14 +12,16 @@ import axios from "axios";
 import { BASE_URL, DEFAULT_HEADERS } from "@/util/constants";
 import { type Settings } from "@/types";
 import { callToast } from "@/util/toast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Modal from "../Modal";
 import { toggleModal } from "@/store/state/modalSlice";
 
 const SettingsScreen: FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { userId, passcode, settings } = useAppSelector((state) => state.noteSlice);
+  const { userId, passcode, settings } = useAppSelector(
+    (state) => state.noteSlice
+  );
   const { deleteDataModal } = useAppSelector((state) => state.modalSlice);
 
   const updateSettingsInFirebase = async ({
@@ -77,7 +79,7 @@ const SettingsScreen: FC = (): JSX.Element => {
 
     dispatch(setScreen(Screen.NEW));
 
-    await router.push("/");
+    router.push("/");
   };
 
   return (
@@ -99,9 +101,7 @@ const SettingsScreen: FC = (): JSX.Element => {
           <Button
             text="Export Data"
             backgroundColor="bg-blue-600"
-            onClick={async () =>
-              await router.push(`api/export/?id=${userId}-${passcode}`)
-            }
+            onClick={() => router.push(`api/export/?id=${userId}-${passcode}`)}
           />
         </div>
       </div>
