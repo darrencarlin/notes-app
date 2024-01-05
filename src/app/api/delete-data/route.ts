@@ -35,8 +35,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const passcodeMatch = verifyPasscode(user?.passcode, passcode);
 
     if (passcodeMatch) {
-      await db.collection("users").doc(userId).delete();
-
+      await db.recursiveDelete(db.collection("users").doc(userId));
       return new Response(JSON.stringify({ message: "User Deleted 🗑️" }), {
         status: 200,
         headers: {
